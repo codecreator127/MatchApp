@@ -1,0 +1,17 @@
+{
+  "[javascript][typescript][typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": "*"
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.next": true
+  },
+  "workbench.editor.pinnedTabSizing": "compact",
+  "editor.formatOnSave": true
+}
