@@ -1,4 +1,5 @@
 import Information from "@/components/Information";
+import Search from "@/components/Search";
 
 // below are possible ways to add the coloured overlay using css (which would make it easy to change themes)
 // currently the green background is part odf the image because text appears behind the coloured overlay otherwise.
@@ -10,7 +11,7 @@ export default function Home() {
     <>
       <div className="h-screen w-screen">
         <div className="h-full w-2/5 mx-auto flex justify-center items-center">
-          <Information />
+          <Search />
         </div>
     </div>
     </>
