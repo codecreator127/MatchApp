@@ -29,15 +29,16 @@ const Orders: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full overflow-auto">
+    <div className="flex flex-col w-full h-full overflow-auto space-y-4 p-4">
       {divs.map((div, index) => (
         <div
           key={index}
           onClick={() => handleClick(index)}
           className={`
-            w-full flex-1 flex justify-center items-center cursor-pointer
-            transition-colors duration-300
-            ${activeDiv === index ? 'bg-gray-200' : 'bg-gray-100'}
+            w-full h-[100px] flex justify-center items-center cursor-pointer
+            transition-colors duration-300 rounded-lg
+            ${activeDiv === index ? 'bg-gray-300' : 'bg-gray-100'}
+            hover:bg-gray-200
           `}
         >
           {div.name}
