@@ -1,9 +1,6 @@
-import Heading from "@/components/Heading";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import CardContainer from "@/components/CardContainer";
-import ContactForm from "@/components/Contact_form";
-import HomeBackground from "../../public/homeBackgroundGreen.png";
+"use client"
+
+import Orders from "@/components/Orders";
 
 // below are possible ways to add the coloured overlay using css (which would make it easy to change themes)
 // currently the green background is part odf the image because text appears behind the coloured overlay otherwise.
@@ -12,25 +9,11 @@ import HomeBackground from "../../public/homeBackgroundGreen.png";
 
 export default function Home() {
   return (
-    <div
-      className="bg-cover bg-center"
-      style={{ backgroundImage: `url(${HomeBackground.src})` }}
-    >
-      <Header links={[{ href: "/about", text: "about" }]} />
-      <div className="m-[max(15vw,20px)] flex-1 items-center justify-center">
-        <h1 className="font-sans text-accent text-5xl text-center drop-shadow-lg">
-          Need a website? Leave it to us.
-        </h1>
-        <p className="font-sans text-base-content font-bold text-2xl text-center m-10 drop-shadow-lg">
-          We’re a group of university students united on our common interest in
-          web design and development.
-        </p>
+    <div className="h-screen w-screen">
+      <div className="h-full w-2/5 mx-auto flex justify-center items-center">
+        <Orders />
       </div>
-      <Heading title="our projects" />
-      <div className="flex min-h-screen flex-col items-center justify-between">
-        <CardContainer />
-      </div>
-      <Footer />
     </div>
+
   );
 }
