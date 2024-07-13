@@ -93,6 +93,8 @@ const Preferences: React.FC = () => {
         });
 
         console.log("Preferences added to Firestore with ID: ", docRef.id);
+
+        window.location.href = "/swiper";
       }
     } catch (error) {
       console.error("Error adding preferences to Firestore:", error);
