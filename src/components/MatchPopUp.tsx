@@ -47,8 +47,10 @@ const Modal: React.FC<ModalProps> = ({ id, isOpen, toggleModal }) => {
       />
 
       <div className={`modal ${isOpen ? "open" : ""}`} role="dialog">
-        <div className="modal-box">
-          <h3 className="text-lg font-bold">{randomPlantasticWord}</h3>
+        <div className="modal-box text-center">
+          <h1 className="text-4xl font-bold text-green-600">
+            {randomPlantasticWord + "!!"}
+          </h1>
         </div>
         <label className="modal-backdrop" htmlFor="my_modal_7">
           Close
