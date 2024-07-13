@@ -73,22 +73,43 @@ export default function Home() {
 
   return (
     <>
-      <Typography variant="h2" sx={{ backgroundColor: "gray", color: "white", textAlign: "center", paddingTop: 10 }}>
+      <Typography
+        variant="h2"
+        sx={{
+          backgroundColor: "gray",
+          color: "white",
+          textAlign: "center",
+          paddingTop: 10,
+        }}
+      >
         <b>Search for a plant</b>
       </Typography>
-      <div className="bg-cover bg-center" style={{ backgroundColor: "gray", paddingBottom: 30 }}>
+      <div
+        className="bg-cover bg-center"
+        style={{ backgroundColor: "gray", paddingBottom: 30 }}
+      >
         <Search search={search} setSearch={setSearch} />
       </div>
-      <Box height={500} justifyContent={"center"} sx={{ backgroundColor: "white", overflow: "auto", paddingTop: 5, paddingRight: 50, paddingLeft: 50 }}>
-          <Stack spacing={2}>
-              {plants
-                .filter((plant) =>
-                  plant.name.toLowerCase().includes(search.toLowerCase())
-                )
-                .map((plant) => (
-                  <ResultCard key={plant.id} plant={plant} />
-              ))}
-          </Stack>
+      <Box
+        height={500}
+        justifyContent={"center"}
+        sx={{
+          backgroundColor: "white",
+          overflow: "auto",
+          paddingTop: 5,
+          paddingRight: 50,
+          paddingLeft: 50,
+        }}
+      >
+        <Stack spacing={2}>
+          {plants
+            .filter((plant) =>
+              plant.name.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((plant) => (
+              <ResultCard key={plant.id} plant={plant} />
+            ))}
+        </Stack>
       </Box>
     </>
   );
