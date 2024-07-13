@@ -1,3 +1,5 @@
+"use client";
+
 import HomeBackground from "../../public/homeBackgroundGreen.png";
 import { AnimatedHamburger } from "@/components/AnimatedHamburger";
 import Toolbar from "@/components/Toolbar";
