@@ -8,7 +8,6 @@ import Orders from "@/components/Orders";
 // <div className="fixed top-0 left-0 w-48 h-full z-0 bg-base-100 z-0 opacity-80"></div>
 
 export default function Home() {
-  const [isActive, setActive] = useState(false);
 
   return (
     <div className="h-screen w-screen">
