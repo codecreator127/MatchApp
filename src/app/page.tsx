@@ -1,3 +1,5 @@
+"use client";
+
 import HomeBackground from "../../public/homeBackgroundGreen.png";
 import { AnimatedHambuger } from "@/components/AnimatedHamburger";
 import Toolbar from "@/components/Toolbar";
@@ -18,7 +20,7 @@ export default function Home() {
         <div className="h-full w-2/5 mx-auto flex justify-center items-center">
           <Preferences />
         </div>
-    </div>
+      </div>
     </>
   );
 }
