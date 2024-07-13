@@ -27,7 +27,7 @@ const Login: React.FC<LoginProps> = ({ auth }) => {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("User logged in");
       // Additional logic after successful login
-      window.location.href = "/about";
+      window.location.href = "/swiper";
     } catch (error) {
       setError("Invalid email or password. Please try again.");
       console.log("Login error:", error);

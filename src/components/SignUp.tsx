@@ -2,6 +2,9 @@ import React, { useState, FormEvent } from "react";
 import { Auth, createUserWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 
+import { auth, db } from "../../firebase/firebase";
+import { doc, collection, addDoc, setDoc } from "firebase/firestore";
+
 interface SignUpProps {
   auth: Auth;
 }
@@ -27,10 +30,28 @@ const SignUp: React.FC<SignUpProps> = ({ auth }) => {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       console.log("User signed up successfully");
       // Additional logic after successful signup
-      window.location.href = "/about";
+
+      const userRef = doc(db, "users", user.uid);
+      const collectionRef = collection(userRef, "plants");
+
+      await setDoc(userRef, {
+        email: user.email,
+      });
+
+      await addDoc(collectionRef, {
+        name: "plant",
+      });
+
+      console.log("User added to Firestore successfully");
+
+      window.location.href = "/preferences";
     } catch (error) {
       setError("Error creating account.");
       console.log("Signup error:", error);
