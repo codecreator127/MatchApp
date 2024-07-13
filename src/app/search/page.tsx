@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Search from "@/components/Search";
 import ResultCard from "@/components/ResultCard";
+import { Box, Stack, Typography } from "@mui/material";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -71,17 +72,24 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-cover bg-center" style={{ backgroundColor: "gray" }}>
-      <Search search={search} setSearch={setSearch} />
-      <div className="flex min-h-screen flex-col items-center justify-between">
-        {plants
-          .filter((plant) =>
-            plant.name.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((plant) => (
-            <ResultCard key={plant.id} plant={plant} />
-          ))}
+    <>
+      <Typography variant="h2" sx={{ backgroundColor: "gray", color: "white", textAlign: "center", paddingTop: 10 }}>
+        <b>Search for a plant</b>
+      </Typography>
+      <div className="bg-cover bg-center" style={{ backgroundColor: "gray", paddingBottom: 30 }}>
+        <Search search={search} setSearch={setSearch} />
       </div>
-    </div>
+      <Box height={500} justifyContent={"center"} sx={{ backgroundColor: "white", overflow: "auto", paddingTop: 5, paddingRight: 50, paddingLeft: 50 }}>
+          <Stack spacing={2}>
+              {plants
+                .filter((plant) =>
+                  plant.name.toLowerCase().includes(search.toLowerCase())
+                )
+                .map((plant) => (
+                  <ResultCard key={plant.id} plant={plant} />
+              ))}
+          </Stack>
+      </Box>
+    </>
   );
 }

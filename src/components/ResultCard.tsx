@@ -24,7 +24,7 @@ function ResultCard(props: ResultCardProps) {
           sx={{
             display: "flex",
             flexDirection: "column",
-            width: 350,
+            width: 490,
             height: 160,
             overflowY: "auto",
           }}

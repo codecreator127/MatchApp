@@ -44,6 +44,9 @@ const CardContainer = () => {
               >
                 <Card
                   title={card.title}
+                  age={card.age}
+                  type={card.type}
+                  needs={card.needs}
                   description={card.description}
                   imgSrc={card.imgSrc}
                   imgAlt={card.imgAlt}
