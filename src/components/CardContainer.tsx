@@ -15,6 +15,7 @@ import {
   getDocs,
   limit,
 } from "firebase/firestore";
+import Modal from "./MatchPopUp";
 
 interface Preferences {
   [key: string]: string;
@@ -101,9 +102,6 @@ async function fetchUserPreferences() {
 
   return ""; // Return empty string if preferences cannot be fetched or user not logged in
 }
-
-import { cardData } from "../constants/cardData";
-import { searchImages } from "../app/api/pixabay/route";
 
 const CardContainer = () => {
   const [prompt, setPrompt] = useState<string>("");
@@ -237,11 +235,19 @@ const CardContainer = () => {
     searchImages(query);
   }, []);
 
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setModalOpen(!modalOpen);
+  };
+
   const handleDragEnd = (offsetX: number) => {
     setCurrentCard((prev) => (prev === cardData.length - 1 ? 0 : prev + 1));
     if (offsetX > 100) {
       setDirection("right");
       // Function whe  swiping right (accept)
+      toggleModal();
+      window.location.href = "/ordering";
     } else if (offsetX < -100) {
       setDirection("left");
       // Function when swiping left (ignore)
@@ -289,6 +295,7 @@ const CardContainer = () => {
                 transition={{ duration: 0.5 }}
               >
                 <Card
+                  age={0}
                   description={card.caringGuide}
                   title={card.name}
                   imgSrc={card.plantType}
@@ -296,11 +303,14 @@ const CardContainer = () => {
                   onDragEnd={handleDragEnd}
                   dragOffset={dragOffset}
                   setDragOffset={setDragOffset}
+                  type={""}
+                  needs={""}
                 />
               </motion.div>
             )
         )}
       </AnimatePresence>
+      <Modal id="my_modal_7" isOpen={modalOpen} toggleModal={toggleModal} />
     </div>
   );
 };
