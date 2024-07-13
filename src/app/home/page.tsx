@@ -1,6 +1,6 @@
 import Heading from "@/components/Heading";
 import Header from "@/components/header";
-import Footer from "@/components/footer";
+import Footer from "@/components/Toolbar";
 import CardContainer from "@/components/CardContainer";
 import HomeBackground from "../../../public/homeBackgroundGreen.png";
 
