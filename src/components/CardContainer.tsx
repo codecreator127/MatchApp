@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import Image from "../../public/test_image.jpeg";
 import { AnimatePresence, motion } from "framer-motion";
@@ -16,6 +14,10 @@ import {
   getDocs,
   limit,
 } from "firebase/firestore";
+
+interface Preferences {
+  [key: string]: string;
+}
 
 const cardData = [
   {
@@ -44,6 +46,7 @@ const cardData = [
     imgAlt: "No more items",
   },
 ];
+
 // Function to fetch the first document in the preferences collection
 async function fetchFirstPreferencesMap(userId: string) {
   try {
@@ -71,43 +74,90 @@ async function fetchFirstPreferencesMap(userId: string) {
 }
 
 // Function to handle fetching and logging preferences map for the current user
-function fetchUserPreferences() {
-  const user = auth.currentUser;
+async function fetchUserPreferences() {
+  try {
+    const user = await auth.currentUser;
 
-  if (user) {
-    const userId = user.uid;
+    if (user) {
+      const userId = user.uid;
+      console.log("User ID:", userId);
 
-    console.log("User ID:", userId);
+      const preferencesMap = await fetchFirstPreferencesMap(userId);
 
-    fetchFirstPreferencesMap(userId)
-      .then((preferencesMap) => {
-        if (preferencesMap) {
-          console.log("Preferences Map:", preferencesMap);
+      if (preferencesMap) {
+        const newPreferencesMap = new Map<string, string>(
+          Object.entries(preferencesMap)
+        );
 
-          const transformedString = preferencesMap
-            .map(
-              (item: { preference: any; name: any }) =>
-                `${item.preference} ${item.name}`
-            )
-            .join(", ");
-          console.log(transformedString);
-          return transformedString;
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching preferences map:", error);
-      });
-  } else {
-    console.log("No user is currently signed in.");
+        const transformedString = Array.from(newPreferencesMap.entries())
+          .map(([preference, value]) => `${value} ${preference}`)
+          .join(", ");
+
+        console.log(transformedString);
+        return transformedString;
+      } else {
+        console.log("No preferences found for the user.");
+      }
+    } else {
+      console.log("No user is currently signed in.");
+    }
+  } catch (error) {
+    console.error("Error fetching user preferences:", error);
   }
+
+  return ""; // Return empty string if preferences cannot be fetched or user not logged in
 }
 
 const CardContainer = () => {
+  const [prompt, setPrompt] = useState<string>("");
+  const [response, setResponse] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
+  const user = auth.currentUser;
+
+  async function gptCall(preferences: string) {
+    try {
+      const response = await fetch("/api/openai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ preferences }),
+      });
+
+      console.log("RESPONSE", response);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("Error:", error);
+      setError("Error: Could not fetch response");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function processGPTResponse() {}
+
+  async function generatePlants() {
+    const preferences = await fetchUserPreferences();
+    console.log(preferences);
+
+    if (preferences) {
+      const output = await gptCall(preferences);
+      console.log(typeof output);
+      return output;
+    }
+  }
+
+  useEffect(() => {
+    // Call generatePlants function once when component mounts
+    generatePlants();
+  }, [user]); // Empty dependency array ensures this effect runs only once
+
   const [currentCard, setCurrentCard] = useState(0);
   const [direction, setDirection] = useState<"left" | "right">("right");
   const [dragOffset, setDragOffset] = useState(0);
-
-  const preferences = fetchUserPreferences();
 
   const handleDragEnd = (offsetX: number) => {
     if (offsetX > 100) {
