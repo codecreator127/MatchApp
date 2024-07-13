@@ -143,7 +143,7 @@ const Card: React.FC<CardProps> = ({
       onDragStart={handleDragStart}
       onDrag={handleDrag}
       onDragEnd={handleDragEnd}
-      style={{ x: dragOffset }}
+      style={{ x: dragOffset, width: "25vw", height: "80vh" }}
       onClick={flipCard}
     >
       <motion.div
@@ -153,13 +153,17 @@ const Card: React.FC<CardProps> = ({
       >
         <div className="w-full h-full">
           <img
-            style={{ pointerEvents: "none" }}
+            style={{
+              pointerEvents: "none",
+              height: "80vh",
+              objectFit: "fill",
+            }}
             src={imgSrc}
             alt={imgAlt}
             className="w-full h-full object-cover transition-all duration-300 brightness-80 group-hover:brightness-50"
           />
           <div className="absolute bottom-0 left-0 p-4">
-            <h2 className="text-white font-sans">{title}</h2>
+            <h2 className="text-white font-sans text-3xl">{title}</h2>
           </div>
         </div>
       </motion.div>
@@ -170,9 +174,14 @@ const Card: React.FC<CardProps> = ({
         style={{ visibility: isFlipped ? "visible" : "hidden" }} // Hide back when not flipped
       >
         <div className="absolute inset-0 bg-white bg-opacity-100">
-          <div className="flex items-center justify-center h-full">
+          <div
+            className="flex items-center justify-center h-full"
+            style={{ marginLeft: "40px", marginRight: "40px" }}
+          >
             <div className="text-black">
-              <h2 style={{ transform: "scale(-1, 1)" }}>{title}</h2>
+              <h2 className="text-3xl" style={{ transform: "scale(-1, 1)" }}>
+                {title}
+              </h2>
               <p style={{ transform: "scale(-1, 1)" }}>{description}</p>
             </div>
           </div>
