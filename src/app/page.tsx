@@ -1,5 +1,5 @@
 import HomeBackground from "../../public/homeBackgroundGreen.png";
-import { AnimatedHambuger } from "@/components/AnimatedHamburger";
+import { AnimatedHamburger } from "@/components/AnimatedHamburger";
 import Toolbar from "@/components/Toolbar";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
@@ -18,7 +18,7 @@ export default function Home() {
         <div className="h-full w-2/5 mx-auto flex justify-center items-center">
           <Preferences />
         </div>
-    </div>
+      </div>
     </>
   );
 }
