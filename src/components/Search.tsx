@@ -5,13 +5,33 @@ type SearchProps = {
   setSearch: (search: string) => void;
 };
 
+async function gptCall(preferences: string) {
+  try {
+    const response = await fetch("/api/openai", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ preferences }),
+    });
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Error:", error);
+    setError("Error: Could not fetch response");
+  } finally {
+    setLoading(false);
+  }
+}
+
 function Search({ search, setSearch }: SearchProps) {
   return (
     <>
       <label className="mx-auto relative bg-white min-w-sm max-w-2xl flex flex-col md:flex-row items-center justify-center border py-2 px-2 rounded-2xl gap-2 shadow-2xl focus-within:border-gray-300">
         <input
           id="search-bar"
-          placeholder="Search for plants"
+          placeholder="Whats your situation?"
           className="px-6 py-2 w-full rounded-md flex-1 outline-none bg-white text-black"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -53,3 +73,10 @@ function Search({ search, setSearch }: SearchProps) {
 }
 
 export default Search;
+function setError(arg0: string) {
+  throw new Error("Function not implemented.");
+}
+
+function setLoading(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
