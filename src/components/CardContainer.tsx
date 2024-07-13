@@ -19,6 +19,27 @@ interface Preferences {
   [key: string]: string;
 }
 
+interface Plant {
+  name: string;
+  plantType: string;
+  caringGuide: string;
+}
+
+function addUniqueItemsBasedOnName(array1: Plant[], array2: Plant[]): Plant[] {
+  // Extract existing names from array1
+  const existingNames = array1.map((item) => item.name);
+
+  // Filter array2 to include only items whose names are not in array1
+  const uniqueItems = array2.filter(
+    (item) => !existingNames.includes(item.name)
+  );
+
+  // Concatenate array1 and filtered array2
+  const mergedArray = [...array1, ...uniqueItems];
+
+  return mergedArray;
+}
+
 // Function to fetch the first document in the preferences collection
 async function fetchFirstPreferencesMap(userId: string) {
   try {
@@ -145,10 +166,10 @@ const CardContainer = () => {
 
     if (preferences) {
       const output = await gptCall(preferences);
-      console.log(output);
+      // console.log(output);
 
       const plantMap = parsePlants(output);
-      console.log(plantMap);
+      // console.log(plantMap);
       return plantMap;
     }
   }
@@ -156,9 +177,7 @@ const CardContainer = () => {
 
   const [cardData, setCardData] = useState<
     { name: string; plantType: string; caringGuide: string }[]
-  >([]);
-
-  const testData = [
+  >([
     {
       name: "Bird of Paradise",
       plantType: "Tropical Flowering Plant",
@@ -174,17 +193,27 @@ const CardContainer = () => {
       plantType: "Tropical Flowering Plant",
       caringGuide: "Prefers shade and weekly watering.",
     },
-  ];
+  ]);
 
   useEffect(() => {
-    setCardData(testData);
-
     generatePlants()
       .then((data) => {
         if (data) {
+          // Extract existing names from current cardData
+          const existingNames = cardData.map((item) => item.name);
+
+          // console.log(existingNames);
+
+          // Filter data to include only items whose names are not in cardData
+          const uniqueItems = data.filter(
+            (item) => !existingNames.includes(item.name)
+          );
+
+          // console.log(uniqueItems);
+
+          // Concatenate cardData and uniqueItems, then update state
+          setCardData((prevCardData) => [...prevCardData, ...uniqueItems]);
           console.log(cardData);
-          console.log([...cardData, ...data]);
-          setCardData([...cardData, ...data]);
         }
       })
       .catch((error) => {
@@ -206,6 +235,32 @@ const CardContainer = () => {
     } else if (offsetX < -100) {
       setDirection("left");
       // Function when swiping left (ignore)
+
+      generatePlants()
+        .then((data) => {
+          if (data) {
+            // Extract existing names from current cardData
+            const existingNames = cardData.map((item) => item.name);
+
+            // console.log(existingNames);
+
+            // Filter data to include only items whose names are not in cardData
+            const uniqueItems = data.filter(
+              (item) => !existingNames.includes(item.name)
+            );
+
+            // console.log(uniqueItems);
+
+            // Concatenate cardData and uniqueItems, then update state
+            setCardData((prevCardData) => [...prevCardData, ...uniqueItems]);
+
+            console.log(cardData);
+          }
+        })
+        .catch((error) => {
+          console.error("Error in generatePlants:", error);
+          // Optionally handle error state or rethrow if necessary
+        });
     }
     setDragOffset(0); // Reset drag offset after changing the card
   };
