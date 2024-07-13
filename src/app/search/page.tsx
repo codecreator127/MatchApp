@@ -76,7 +76,7 @@ export default function Home() {
       <Typography
         variant="h2"
         sx={{
-          backgroundColor: "gray",
+          backgroundColor: "#357960",
           color: "white",
           textAlign: "center",
           paddingTop: 10,
@@ -86,19 +86,20 @@ export default function Home() {
       </Typography>
       <div
         className="bg-cover bg-center"
-        style={{ backgroundColor: "gray", paddingBottom: 30 }}
+        style={{ backgroundColor: "#357960", paddingBottom: 30 }}
       >
         <Search search={search} setSearch={setSearch} />
       </div>
       <Box
-        height={500}
+        height={"100%"}
         justifyContent={"center"}
         sx={{
-          backgroundColor: "white",
+          backgroundColor: "#a8c4b8",
           overflow: "auto",
           paddingTop: 5,
           paddingRight: 50,
           paddingLeft: 50,
+          paddingBottom: 5
         }}
       >
         <Stack spacing={2}>
