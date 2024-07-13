@@ -12,11 +12,11 @@ function Results() {
             <Card sx={{ display: 'flex' }}>
                 <CardMedia
                     component="img"
-                    sx={{ width: 180, maxHeight: 150 }}
+                    sx={{ width: 180, height: 160 }}
                     image="https://hips.hearstapps.com/hmg-prod/images/thimble-cactus-royalty-free-image-1695063544.jpg?crop=1.00xw:0.834xh;0,0.115xh&resize=980:*"
                     alt="Cactus plant"
                 />
-                <Box sx={{ display: 'flex', flexDirection: 'column', width: 350, maxHeight: 150, overflowY: "scroll" }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', width: 350, height: 160, overflowY: "auto" }}>
                     <CardContent sx={{ flex: '1 0 auto' }}>
                         <Typography component="div" variant="h5">
                             Cactus
