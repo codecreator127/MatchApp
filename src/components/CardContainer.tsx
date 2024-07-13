@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
-import Image from "../../public/test_image.jpeg";
 import { AnimatePresence, motion } from "framer-motion";
+import { cardData } from "../constants/cardData";
+import { searchImages } from "../app/api/pixabay/route"
 
 import { auth, db } from "../../firebase/firebase";
 import {
@@ -100,6 +101,9 @@ async function fetchUserPreferences() {
 
   return ""; // Return empty string if preferences cannot be fetched or user not logged in
 }
+
+import { cardData } from "../constants/cardData";
+import { searchImages } from "../app/api/pixabay/route"
 
 const CardContainer = () => {
   const [prompt, setPrompt] = useState<string>("");
@@ -226,6 +230,12 @@ const CardContainer = () => {
   const [currentCard, setCurrentCard] = useState(0);
   const [direction, setDirection] = useState<"left" | "right">("right");
   const [dragOffset, setDragOffset] = useState(0);
+
+  const query = "snake+plant";
+
+  React.useEffect(() => {
+    searchImages(query);
+  }, []);
 
   const handleDragEnd = (offsetX: number) => {
     setCurrentCard((prev) => (prev === cardData.length - 1 ? 0 : prev + 1));
