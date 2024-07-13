@@ -36,56 +36,41 @@ const cardData = [
 const CardContainer = () => {
   const [currentCard, setCurrentCard] = useState(0);
   const [direction, setDirection] = useState<"left" | "right">("right");
-  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
 
-  const handleDragEnd = (dragDirection: string) => {
-    if (dragDirection === "left" || dragDirection === "right") {
-      setDirection(dragDirection);
-      setIsDragging(false); // Reset dragging state after drag ends
-      if (currentCard === cardData.length - 1) {
-        setCurrentCard(cardData.length - 1);
-      } else if (dragDirection === "left") {
-        setCurrentCard((prev) => (prev === 0 ? cardData.length - 1 : prev - 1));
-      } else {
-        setCurrentCard((prev) => (prev === cardData.length - 1 ? 0 : prev + 1));
-      }
+  const handleDragEnd = (offsetX: number) => {
+    if (offsetX > 100) {
+      setDirection("right");
+      setCurrentCard((prev) => (prev === cardData.length - 1 ? 0 : prev + 1));
+    } else if (offsetX < -100) {
+      setDirection("left");
+      setCurrentCard((prev) => (prev === 0 ? cardData.length - 1 : prev - 1));
     }
+    setDragOffset(0); // Reset drag offset after changing the card
   };
 
   return (
     <div className="relative w-[50vw] h-[90vh] flex items-center justify-center">
       <AnimatePresence mode="wait">
         {cardData.map((card, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: index === currentCard ? 1 : 0, x: 0 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: direction === "left" ? 100 : -100 }}
-            transition={{ duration: 0.5 }}
-            drag={isDragging ? "x" : false}
-            dragElastic={0.1}
-            dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-            onDragStart={() => setIsDragging(true)}
-            onDragEnd={(event, info) => {
-              const { offset } = info;
-              if (offset.x > 100) {
-                handleDragEnd("right");
-              } else if (offset.x < -100) {
-                handleDragEnd("left");
-              } else {
-                setIsDragging(false);
-              }
-            }}
-          >
-            {index === currentCard && (
+          index === currentCard && (
+            <motion.div
+              key={index}
+              initial={{ opacity: 1, x: 0 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: direction === "left" ? 50 : -50 }}
+              transition={{ duration: 0.5 }}
+            >
               <Card
                 title={card.title}
                 imgSrc={card.imgSrc}
                 imgAlt={card.imgAlt}
                 onDragEnd={handleDragEnd}
+                dragOffset={dragOffset}
+                setDragOffset={setDragOffset}
               />
-            )}
-          </motion.div>
+            </motion.div>
+          )
         ))}
       </AnimatePresence>
     </div>

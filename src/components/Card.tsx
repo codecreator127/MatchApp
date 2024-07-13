@@ -2,16 +2,17 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
-import { on } from "events";
 
 interface CardProps {
   title: string;
   imgSrc: string;
   imgAlt: string;
-  onDragEnd: (direction: string) => void;
+  onDragEnd: (offsetX: number) => void;
+  dragOffset: number;
+  setDragOffset: (offset: number) => void;
 }
 
-const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd }) => {
+const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd, dragOffset, setDragOffset }) => {
   const controls = useAnimation();
   const [isLeaning, setIsLeaning] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -70,9 +71,8 @@ const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd }) => {
 
   const handleDrag = (event: any, info: any) => {
     const { offset } = info;
-    if (offset.x > 100) {
-      onDragEnd("right");
-    } else if (offset.x > 0) {
+    setDragOffset(offset.x);
+    if (offset.x > 0) {
       controls.start({
         rotate: 5,
         originX: "0%",
@@ -80,8 +80,6 @@ const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd }) => {
         translateX: 10,
         transition: { duration: 0.2 },
       });
-    } else if (offset.x < -100) {
-      onDragEnd("left");
     } else if (offset.x < 0) {
       controls.start({
         rotate: -5,
@@ -95,21 +93,14 @@ const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd }) => {
 
   const handleDragEnd = (event: any, info: any) => {
     setIsDragging(false);
-
     const { offset } = info;
-    if (offset.x > 100) {
-      onDragEnd("right");
-    } else if (offset.x < -100) {
-      onDragEnd("left");
-    }
+    onDragEnd(offset.x);
 
-    if (title === "No more items") {
-      controls.start({
-        rotate: 0,
-        translateX: 0,
-        transition: { duration: 0.5 },
-      });
-    }
+    controls.start({
+      rotate: 0,
+      translateX: 0,
+      transition: { duration: 0.5 },
+    });
   };
 
   return (
@@ -122,6 +113,7 @@ const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd }) => {
       onDragStart={handleDragStart}
       onDrag={handleDrag}
       onDragEnd={handleDragEnd}
+      style={{ x: dragOffset }}
     >
       <div className="w-full h-full">
         <img
