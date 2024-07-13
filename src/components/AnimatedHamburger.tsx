@@ -5,7 +5,7 @@ interface AnimatedHamburgerProps {
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const AnimatedHambuger: React.FC<AnimatedHamburgerProps> = ({
+export const AnimatedHamburger: React.FC<AnimatedHamburgerProps> = ({
   isActive,
   setActive,
 }) => {
