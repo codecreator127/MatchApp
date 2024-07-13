@@ -21,11 +21,11 @@ export async function POST(request) {
         content:
           "You are a plant tinder bot. Based on these preferences : ." +
           params.preferences +
-          ". Recommend a suitable plant. Only return fields in this order: name, plant type, and caring guide. Limit caring guide to 30 words",
+          ". Recommend a suitable plant. Only return fields in this order: name, plant type, caring guide, description. Limit caring guide to 30 words. Generate 3.",
       },
     ],
     temperature: 0,
-    max_tokens: 50,
+    max_tokens: 150,
     top_p: 0.5,
     frequency_penalty: 0,
     presence_penalty: 0,
