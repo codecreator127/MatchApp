@@ -1,9 +1,9 @@
-"use client";
-
 import React, { useState } from "react";
 import Card from "./Card";
 import Image from "../../public/test_image.jpeg";
 import { AnimatePresence, motion } from "framer-motion";
+
+import MatchPopUp from "./MatchPopUp";
 
 // Data for each card
 const cardData = [
@@ -49,7 +49,8 @@ const CardContainer = () => {
     setCurrentCard((prev) => (prev === cardData.length - 1 ? 0 : prev + 1));
     if (offsetX > 100) {
       setDirection("right");
-      // Function whe  swiping right (accept)
+      // Call toggleModal to open the modal
+      toggleModal();
     } else if (offsetX < -100) {
       setDirection("left");
       // Function when swiping left (ignore)
@@ -57,9 +58,15 @@ const CardContainer = () => {
     setDragOffset(0); // Reset drag offset after changing the card
   };
 
+  const toggleModal = () => {
+    // Implement modal toggle logic here
+    console.log("Toggle modal");
+    // Example: set a state to toggle modal visibility
+  };
+
   return (
     <div className="relative w-[50vw] h-[90vh] flex items-center justify-center">
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {cardData.map(
           (card, index) =>
             index === currentCard && (
@@ -83,6 +90,7 @@ const CardContainer = () => {
             )
         )}
       </AnimatePresence>
+      <MatchPopUp { modalOpen, toggleModal } />
     </div>
   );
 };
