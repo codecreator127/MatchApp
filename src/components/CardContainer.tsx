@@ -13,8 +13,10 @@ import {
   orderBy,
   getDocs,
   limit,
+  updateDoc,
 } from "firebase/firestore";
 import Modal from "./MatchPopUp";
+import { useRouter } from "next/navigation";
 
 interface Preferences {
   [key: string]: string;
@@ -24,21 +26,6 @@ interface Plant {
   name: string;
   plantType: string;
   caringGuide: string;
-}
-
-function addUniqueItemsBasedOnName(array1: Plant[], array2: Plant[]): Plant[] {
-  // Extract existing names from array1
-  const existingNames = array1.map((item) => item.name);
-
-  // Filter array2 to include only items whose names are not in array1
-  const uniqueItems = array2.filter(
-    (item) => !existingNames.includes(item.name)
-  );
-
-  // Concatenate array1 and filtered array2
-  const mergedArray = [...array1, ...uniqueItems];
-
-  return mergedArray;
 }
 
 // Function to fetch the first document in the preferences collection
@@ -233,13 +220,41 @@ const CardContainer = () => {
     setModalOpen(!modalOpen);
   };
 
+  const router = useRouter();
+
+  const navigateToOrders = (
+    plantName: string,
+    imageUrl: string,
+    guide: string,
+    type: string
+  ) => {
+    const queryParams = {
+      name: plantName,
+      image: imageUrl,
+      guide: guide,
+      type: type,
+    }; // Ensure query parameters are strings
+    const queryString = new URLSearchParams(queryParams).toString();
+    const href = `/ordering?${queryString}`;
+    router.push(href);
+  };
+
   const handleDragEnd = (offsetX: number) => {
     setCurrentCard((prev) => (prev === cardData.length - 1 ? 0 : prev + 1));
     if (offsetX > 100) {
       setDirection("right");
       // Function whe  swiping right (accept)
       toggleModal();
-      window.location.href = "/ordering";
+
+      setTimeout(() => {
+        navigateToOrders(
+          cardData[currentCard].name,
+          "https://media.post.rvohealth.io/wp-content/uploads/2022/01/snake-plant-detail-732x549-thumbnail-732x549.jpg",
+          cardData[currentCard].caringGuide,
+          cardData[currentCard].plantType
+          // cardData[currentCard].image
+        );
+      }, 1000);
     } else if (offsetX < -100) {
       setDirection("left");
       // Function when swiping left (ignore)
@@ -291,7 +306,7 @@ const CardContainer = () => {
                   description={card.caringGuide}
                   title={card.name}
                   imgSrc={card.imgSrc}
-                  imgAlt={card.caringGuide}
+                  imgAlt={card.name}
                   onDragEnd={handleDragEnd}
                   dragOffset={dragOffset}
                   setDragOffset={setDragOffset} type={""} needs={""} />
