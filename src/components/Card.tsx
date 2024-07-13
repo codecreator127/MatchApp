@@ -75,6 +75,12 @@ const Card: React.FC<CardProps> = ({
     };
   }, [controls, isLeaning]);
 
+  useEffect(() => {
+    if (!isFlipped) {
+      setDragOffset(0);
+    }
+  }, [isFlipped, setDragOffset]);
+
   const handleDragStart = () => {
     if (isFlipped) return;
     setIsDragging(true);
@@ -119,6 +125,7 @@ const Card: React.FC<CardProps> = ({
   };
 
   const flipCard = () => {
+    if (isDragging) return;
     setIsFlipped(!isFlipped);
     controls.start({
       rotateY: isFlipped ? 0 : 180,
