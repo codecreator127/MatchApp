@@ -52,26 +52,27 @@ const CardContainer = () => {
   return (
     <div className="relative w-[50vw] h-[90vh] flex items-center justify-center">
       <AnimatePresence mode="wait">
-        {cardData.map((card, index) => (
-          index === currentCard && (
-            <motion.div
-              key={index}
-              initial={{ opacity: 1, x: 0 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: direction === "left" ? 50 : -50 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card
-                title={card.title}
-                imgSrc={card.imgSrc}
-                imgAlt={card.imgAlt}
-                onDragEnd={handleDragEnd}
-                dragOffset={dragOffset}
-                setDragOffset={setDragOffset}
-              />
-            </motion.div>
-          )
-        ))}
+        {cardData.map(
+          (card, index) =>
+            index === currentCard && (
+              <motion.div
+                key={index}
+                initial={{ opacity: 1, x: 0 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: direction === "left" ? 50 : -50 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Card
+                  title={card.title}
+                  imgSrc={card.imgSrc}
+                  imgAlt={card.imgAlt}
+                  onDragEnd={handleDragEnd}
+                  dragOffset={dragOffset}
+                  setDragOffset={setDragOffset}
+                />
+              </motion.div>
+            )
+        )}
       </AnimatePresence>
     </div>
   );

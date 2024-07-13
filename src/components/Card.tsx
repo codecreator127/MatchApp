@@ -12,7 +12,14 @@ interface CardProps {
   setDragOffset: (offset: number) => void;
 }
 
-const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd, dragOffset, setDragOffset }) => {
+const Card: React.FC<CardProps> = ({
+  title,
+  imgSrc,
+  imgAlt,
+  onDragEnd,
+  dragOffset,
+  setDragOffset,
+}) => {
   const controls = useAnimation();
   const [isLeaning, setIsLeaning] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
