@@ -85,6 +85,67 @@ async function fetchUserPreferences() {
   return ""; // Return empty string if preferences cannot be fetched or user not logged in
 }
 
+// effects
+const applyRedGlow = () => {
+  // Create a div element for the red overlay
+  const redOverlay = document.createElement("div");
+
+  // Apply styles to the overlay to cover the entire screen and give it a red glow
+  redOverlay.style.position = "fixed";
+  redOverlay.style.top = "0";
+  redOverlay.style.left = "0";
+  redOverlay.style.width = "100vw";
+  redOverlay.style.height = "100vh";
+  redOverlay.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+  redOverlay.style.zIndex = "9999";
+  redOverlay.style.pointerEvents = "none";
+  redOverlay.style.boxShadow = "0 0 20px 10px rgba(255, 0, 0, 0.75)";
+
+  // Add an ID to the overlay for future reference (optional)
+  redOverlay.id = "red-glow-overlay";
+
+  // Append the overlay to the body
+  document.body.appendChild(redOverlay);
+};
+
+// Function to remove the red glow effect
+const removeRedGlow = () => {
+  const redOverlay = document.getElementById("red-glow-overlay");
+  if (redOverlay) {
+    document.body.removeChild(redOverlay);
+  }
+};
+
+const applyGreenGlow = () => {
+  // Create a div element for the red overlay
+  const redOverlay = document.createElement("div");
+
+  // Apply styles to the overlay to cover the entire screen and give it a red glow
+  redOverlay.style.position = "fixed";
+  redOverlay.style.top = "0";
+  redOverlay.style.left = "0";
+  redOverlay.style.width = "100vw";
+  redOverlay.style.height = "100vh";
+  redOverlay.style.backgroundColor = "rgba(201, 242, 155, 0.5)";
+  redOverlay.style.zIndex = "9999";
+  redOverlay.style.pointerEvents = "none";
+  redOverlay.style.boxShadow = "0 0 20px 10px rgba(201, 242, 155, 0.75)";
+
+  // Add an ID to the overlay for future reference (optional)
+  redOverlay.id = "red-glow-overlay";
+
+  // Append the overlay to the body
+  document.body.appendChild(redOverlay);
+};
+
+// Function to remove the red glow effect
+const removeGreenGlow = () => {
+  const redOverlay = document.getElementById("red-glow-overlay");
+  if (redOverlay) {
+    document.body.removeChild(redOverlay);
+  }
+};
+
 const CardContainer = () => {
   const [prompt, setPrompt] = useState<string>("");
   const [response, setResponse] = useState<any>();
@@ -250,6 +311,10 @@ const CardContainer = () => {
     if (offsetX > 100) {
       setDirection("right");
       // Function whe  swiping right (accept)
+
+      applyGreenGlow();
+      setTimeout(removeGreenGlow, 500);
+
       toggleModal();
 
       setTimeout(() => {
@@ -264,6 +329,10 @@ const CardContainer = () => {
     } else if (offsetX < -100) {
       setDirection("left");
       // Function when swiping left (ignore)
+
+      applyRedGlow();
+      // Remove the glow after 3 seconds (example)
+      setTimeout(removeRedGlow, 500);
 
       generatePlants()
         .then(async (data) => {

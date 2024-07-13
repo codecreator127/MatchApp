@@ -48,7 +48,7 @@ const Modal: React.FC<ModalProps> = ({ id, isOpen, toggleModal }) => {
 
       <div className={`modal ${isOpen ? "open" : ""}`} role="dialog">
         <div className="modal-box text-center">
-          <h1 className="text-4xl font-bold text-green-600">
+          <h1 className="text-4xl font-bold text-green-900">
             {randomPlantasticWord + "!!"}
           </h1>
         </div>
