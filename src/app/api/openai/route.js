@@ -24,9 +24,9 @@ export async function POST(request) {
           ". Recommend a suitable plant. Only return fields in this order: name, plant type, caring guide, description. Limit caring guide to 30 words. Generate 3.",
       },
     ],
-    temperature: 0,
+    temperature: 0.1,
     max_tokens: 150,
-    top_p: 0.5,
+    top_p: 0.2,
     frequency_penalty: 0,
     presence_penalty: 0,
   });
