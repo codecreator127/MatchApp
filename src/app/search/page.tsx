@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Heading from "@/components/Heading";
 import Search from "@/components/Search";
 import ResultCard from "@/components/ResultCard";
 
