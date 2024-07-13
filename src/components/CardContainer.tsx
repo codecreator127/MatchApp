@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import { AnimatePresence, motion } from "framer-motion";
-import { searchImages } from "../app/api/pixabay/route"
+import { searchImages } from "../app/api/pixabay/route";
 
 import { auth, db } from "../../firebase/firebase";
 import {
@@ -155,25 +155,28 @@ const CardContainer = () => {
   const user = auth.currentUser;
 
   const [cardData, setCardData] = useState<
-    { name: string; plantType: string; caringGuide: string; imgSrc: string; }[]
+    { name: string; plantType: string; caringGuide: string; imgSrc: string }[]
   >([
     {
       name: "Birds of Paradise",
       plantType: "Tropical Flowering Plant",
       caringGuide: "Place in bright, indirect light.",
-      imgSrc: "https://pixabay.com/get/g3c17b692fc2658adefb832447f7830f9a7b8bf4c8b0e831ac6630dcb371c45ca5c261d0f0cc31dda916b6f606b9d8cec98015d02d4b7ccd7d62a03aac791e9e4_640.jpg",
+      imgSrc:
+        "https://pixabay.com/get/g3c17b692fc2658adefb832447f7830f9a7b8bf4c8b0e831ac6630dcb371c45ca5c261d0f0cc31dda916b6f606b9d8cec98015d02d4b7ccd7d62a03aac791e9e4_640.jpg",
     },
     {
       name: "Areca Palm",
       plantType: "Tropical Palm Tree",
       caringGuide: "Thrives in bright, indirect light.",
-      imgSrc: "https://pixabay.com/get/g258ae454b5cbc21dfcc2c2d31716d9cf886a3d0d8048c8e7564aa13218dfd3d85ca665176ee9cbe893c9dfefb9f654da59179838198521139ad29300573aa6c0_640.jpg",
+      imgSrc:
+        "https://pixabay.com/get/g258ae454b5cbc21dfcc2c2d31716d9cf886a3d0d8048c8e7564aa13218dfd3d85ca665176ee9cbe893c9dfefb9f654da59179838198521139ad29300573aa6c0_640.jpg",
     },
     {
       name: "Peace Lily",
       plantType: "Tropical Flowering Plant",
       caringGuide: "Prefers shade and weekly watering.",
-      imgSrc: "https://pixabay.com/get/g579303d31bd7933116aeec7a45ce423c76b080d20e094db917856fa9006330ae6466c797574f1dc51c49f4c6fb74ee5b238c3650d77352d3a7cc9e4d818e5e70_640.jpg",
+      imgSrc:
+        "https://pixabay.com/get/g579303d31bd7933116aeec7a45ce423c76b080d20e094db917856fa9006330ae6466c797574f1dc51c49f4c6fb74ee5b238c3650d77352d3a7cc9e4d818e5e70_640.jpg",
     },
   ]);
 
@@ -195,7 +198,10 @@ const CardContainer = () => {
           );
 
           // Concatenate cardData and uniqueItems, then update state
-          setCardData((prevCardData) => [...prevCardData, ...uniqueItems.map(item => ({ ...item, imgSrc: "" }))]);
+          setCardData((prevCardData) => [
+            ...prevCardData,
+            ...uniqueItems.map((item) => ({ ...item, imgSrc: "" })),
+          ]);
 
           for (let i = 0; i < cardData.length; i++) {
             const searchQuery = replaceSpaces(cardData[i].name);
@@ -249,12 +255,12 @@ const CardContainer = () => {
       setTimeout(() => {
         navigateToOrders(
           cardData[currentCard].name,
-          "https://media.post.rvohealth.io/wp-content/uploads/2022/01/snake-plant-detail-732x549-thumbnail-732x549.jpg",
+          // "https://media.post.rvohealth.io/wp-content/uploads/2022/01/snake-plant-detail-732x549-thumbnail-732x549.jpg",
+          cardData[currentCard].imgSrc,
           cardData[currentCard].caringGuide,
           cardData[currentCard].plantType
-          // cardData[currentCard].image
         );
-      }, 1000);
+      }, 500);
     } else if (offsetX < -100) {
       setDirection("left");
       // Function when swiping left (ignore)
@@ -277,7 +283,10 @@ const CardContainer = () => {
             );
 
             // Concatenate cardData and uniqueItems, then update state
-            setCardData((prevCardData) => [...prevCardData, ...uniqueItems.map(item => ({ ...item, imgSrc: "" }))]);
+            setCardData((prevCardData) => [
+              ...prevCardData,
+              ...uniqueItems.map((item) => ({ ...item, imgSrc: "" })),
+            ]);
           }
         })
         .catch((error) => {
@@ -309,7 +318,10 @@ const CardContainer = () => {
                   imgAlt={card.name}
                   onDragEnd={handleDragEnd}
                   dragOffset={dragOffset}
-                  setDragOffset={setDragOffset} type={""} needs={""} />
+                  setDragOffset={setDragOffset}
+                  type={""}
+                  needs={""}
+                />
               </motion.div>
             )
         )}
