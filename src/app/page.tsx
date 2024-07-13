@@ -1,4 +1,3 @@
-
 "use client";
 
 import { auth } from "../../firebase/firebase";
@@ -11,6 +10,5 @@ export default function Home() {
       <Login auth={auth} />
       <SignUp auth={auth} />
     </div>
-    </>
   );
 }
