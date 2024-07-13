@@ -30,6 +30,7 @@ const SignUp: React.FC<SignUpProps> = ({ auth }) => {
       await createUserWithEmailAndPassword(auth, email, password);
       console.log("User signed up successfully");
       // Additional logic after successful signup
+      window.location.href = "/about";
     } catch (error) {
       setError("Error creating account.");
       console.log("Signup error:", error);
