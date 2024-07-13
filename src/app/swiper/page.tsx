@@ -2,6 +2,7 @@
 
 import { AnimatedHamburger } from "@/components/AnimatedHamburger";
 import CardContainer from "@/components/CardContainer";
+import GptResponse from "@/components/GptResponse";
 import Toolbar from "@/components/Toolbar";
 import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
@@ -21,6 +22,8 @@ export default function Home() {
           {isActive && <Toolbar setActive={setActive} />}
         </AnimatePresence>
       </div>
+
+      <GptResponse />
     </div>
 
   );
