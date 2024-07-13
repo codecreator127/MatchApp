@@ -1,4 +1,5 @@
 import Information from "@/components/Information";
+import Preferences from "@/components/Preference";
 import Results from "@/components/Results";
 import Search from "@/components/Search";
 
@@ -12,7 +13,7 @@ export default function Home() {
     <>
       <div className="h-screen w-screen">
         <div className="h-full w-2/5 mx-auto flex justify-center items-center">
-          <Results />
+          <Preferences />
         </div>
     </div>
     </>
