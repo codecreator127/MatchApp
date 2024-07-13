@@ -2,9 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, useAnimation, Variants } from "framer-motion";
+import Information from "./Information";
 
 interface CardProps {
   title: string;
+  age: number;
+  type: string;
+  needs: string;
   description: string;
   imgSrc: string;
   imgAlt: string;
@@ -15,6 +19,9 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({
   title,
+  age,
+  type,
+  needs,
   description,
   imgSrc,
   imgAlt,
@@ -173,18 +180,8 @@ const Card: React.FC<CardProps> = ({
         animate={isFlipped ? "front" : "back"}
         style={{ visibility: isFlipped ? "visible" : "hidden" }} // Hide back when not flipped
       >
-        <div className="absolute inset-0 bg-white bg-opacity-100">
-          <div
-            className="flex items-center justify-center h-full"
-            style={{ marginLeft: "40px", marginRight: "40px" }}
-          >
-            <div className="text-black">
-              <h2 className="text-3xl" style={{ transform: "scale(-1, 1)" }}>
-                {title}
-              </h2>
-              <p style={{ transform: "scale(-1, 1)" }}>{description}</p>
-            </div>
-          </div>
+        <div className="absolute inset-0 bg-white bg-opacity-100" style={{ transform: "scale(-1, 1)" }}>
+          <Information name={title} age={age} type={type} needs={needs} description={description}/>
         </div>
       </motion.div>
     </motion.div>
