@@ -7,14 +7,14 @@ import Preferences from "@/components/Preference";
 import { auth } from "../../firebase/firebase";
 import Login from "@/components/Login";
 import SignUp from "@/components/SignUp";
+import GptResponse from "@/components/GptResponse";
 
 export default function Home() {
-
   return (
     <>
       <div className="h-screen w-screen">
         <div className="h-full w-2/5 mx-auto flex justify-center items-center">
-          <Preferences />
+          <GptResponse />
         </div>
       </div>
     </>
