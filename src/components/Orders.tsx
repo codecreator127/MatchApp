@@ -1,29 +1,80 @@
-import { Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Stack } from '@mui/material';
-import React, { useState } from 'react';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import HandshakeIcon from '@mui/icons-material/Handshake';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Stack,
+} from "@mui/material";
+import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { addDoc, collection, doc } from "firebase/firestore";
+import { db, auth } from "../../firebase/firebase";
+
+async function addPlantToCollection(
+  plantName: string,
+  url: string,
+  type: string,
+  guide: string
+) {
+  console.log(plantName);
+  console.log(url);
+  console.log(type);
+  console.log(guide);
+
+  const user = await auth.currentUser;
+  if (user) {
+    const userRef = doc(db, "users", user.uid);
+    const collectionRef = collection(userRef, "plants");
+
+    await addDoc(collectionRef, {
+      name: plantName,
+      url: url,
+      type: type,
+      guide: guide,
+    });
+  }
+}
 
 const Orders: React.FC = () => {
   const [activeDiv, setActiveDiv] = useState<number | null>(null);
-  const [result, setResult] = useState<string>('');
+  const [result, setResult] = useState<string>("");
+
+  const searchParams = useSearchParams();
+  const plantName = searchParams.get("name");
+  const image = searchParams.get("image");
+  const guide = searchParams.get("guide");
+  const type = searchParams.get("type");
+
+  const router = useRouter();
+
+  const url = "https://www.kings.co.nz/search?q=";
 
   const divs: { name: string; action: () => void }[] = [
     {
-      name: 'Buy',
-      action: () => alert('Redirect to Plantbarn?')
+      name: "Buy",
+      action: () => {
+        window.open(url + plantName, "_blank");
+        router.push("/swiper");
+      },
     },
     {
-      name: 'Trade',
-      action: () => alert('Only appear if there is one available in area')
+      name: "Trade",
+      action: () => router.push("/swiper"),
     },
     {
-      name: 'Sponsor',
-      action: () => alert('Redirect to sponsor page?')
-    }
+      name: "Sponsor",
+      action: () => router.push("/swiper"),
+    },
   ];
 
   const handleClick = (index: number): void => {
+    addPlantToCollection(
+      plantName || "plant",
+      image || "image",
+      type || "type",
+      guide || "guide"
+    );
     setActiveDiv(index);
     divs[index].action();
   };
@@ -31,29 +82,37 @@ const Orders: React.FC = () => {
   return (
     <>
       <Card style={{ maxHeight: 1500 }}>
-        <CardHeader title={`You've matched with ${"Snake Plant"}!`} subheader="You can now buy, trade or sponsor this plant" />
-        <CardMedia component="img" style={{ borderRadius: "50%" }} image="https://media.post.rvohealth.io/wp-content/uploads/2022/01/snake-plant-detail-732x549-thumbnail-732x549.jpg" alt="Plant" />
+        <CardHeader
+          title={`You've matched with ${plantName}!`}
+          subheader="You can now buy, trade or sponsor this plant"
+        />
+        <CardMedia
+          component="img"
+          style={{ borderRadius: "50%" }}
+          image={`${image}`}
+          alt="Plant"
+        />
         <CardContent>
           <Stack spacing={2}>
             {divs.map((div, index) => (
-              <Button variant='contained' key={index} sx={{ backgroundColor: "#8cb1a1", "&:hover": {backgroundColor: "#a8c4b8"}, height: 50, fontSize: 18, borderRadius: 100, textTransform: "lowercase" }}>
+              <Button
+                variant="contained"
+                key={index}
+                sx={{
+                  backgroundColor: "#8cb1a1",
+                  "&:hover": { backgroundColor: "#a8c4b8" },
+                  height: 50,
+                  fontSize: 18,
+                  borderRadius: 100,
+                  textTransform: "lowercase",
+                }}
+                onClick={() => handleClick(index)} // Add onClick handler here
+              >
                 {div.name} Plant
               </Button>
             ))}
           </Stack>
         </CardContent>
-        {/*<CardActions disableSpacing>
-          <IconButton aria-label='Buy Plant'>
-            <AddShoppingCartIcon sx={{ height: 30, width: 30 }}/>
-          </IconButton>
-          <IconButton aria-label='Trade Plant'>
-            <HandshakeIcon sx={{ height: 30, width: 30 }} />
-          </IconButton>
-          <IconButton aria-label='Sponsor Plant'>
-            <AttachMoneyIcon sx={{ height: 30, width: 30 }} />
-          </IconButton>
-        </CardActions>
-        */}
       </Card>
     </>
   );

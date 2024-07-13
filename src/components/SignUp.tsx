@@ -39,14 +39,9 @@ const SignUp: React.FC<SignUpProps> = ({ auth }) => {
       // Additional logic after successful signup
 
       const userRef = doc(db, "users", user.uid);
-      const collectionRef = collection(userRef, "plants");
 
       await setDoc(userRef, {
         email: user.email,
-      });
-
-      await addDoc(collectionRef, {
-        name: "plant",
       });
 
       console.log("User added to Firestore successfully");
