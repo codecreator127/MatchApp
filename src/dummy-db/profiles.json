@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "johndoe@hackathon.co.nz",
+    "plants": [
+      {
+        "plantId": 1,
+        "date": "2021-01-01",
+        "age": 1,
+        "customName": "Nickname",
+        "customImage": "https://via.placeholder.com/150"
+      },
+      {
+        "plantId": 2,
+        "date": "2021-01-01",
+        "age": 1,
+        "customName": "Nickname",
+        "customImage": "https://via.placeholder.com/150"
+      },
+      {
+        "plantId": 3,
+        "date": "2021-01-01",
+        "age": 1,
+        "customName": "Nickname",
+        "customImage": "https://via.placeholder.com/150"
+      },
+      {
+        "plantId": 4,
+        "date": "2021-01-01",
+        "age": 1,
+        "customName": "Nickname",
+        "customImage": "https://via.placeholder.com/150"
+      },
+      {
+        "plantId": 5,
+        "date": "2021-01-01",
+        "age": 1,
+        "customName": "Nickname",
+        "customImage": "https://via.placeholder.com/150"
+      }
+    ]
+  }
+]

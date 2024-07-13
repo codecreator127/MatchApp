@@ -1,10 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, Variants } from "framer-motion";
+import Information from "./Information";
 
 interface CardProps {
   title: string;
+  age: number;
+  type: string;
+  needs: string;
+  description: string;
   imgSrc: string;
   imgAlt: string;
   onDragEnd: (offsetX: number) => void;
@@ -12,9 +17,21 @@ interface CardProps {
   setDragOffset: (offset: number) => void;
 }
 
-const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd, dragOffset, setDragOffset }) => {
+const Card: React.FC<CardProps> = ({
+  title,
+  age,
+  type,
+  needs,
+  description,
+  imgSrc,
+  imgAlt,
+  onDragEnd,
+  dragOffset,
+  setDragOffset,
+}) => {
   const controls = useAnimation();
   const [isLeaning, setIsLeaning] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
@@ -65,11 +82,20 @@ const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd, dragOffse
     };
   }, [controls, isLeaning]);
 
+  useEffect(() => {
+    if (!isFlipped) {
+      setDragOffset(0);
+    }
+  }, [isFlipped, setDragOffset]);
+
   const handleDragStart = () => {
+    if (isFlipped) return;
     setIsDragging(true);
   };
 
   const handleDrag = (event: any, info: any) => {
+    if (isFlipped) return;
+    setIsFlipped(false);
     const { offset } = info;
     setDragOffset(offset.x);
     if (offset.x > 0) {
@@ -92,6 +118,8 @@ const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd, dragOffse
   };
 
   const handleDragEnd = (event: any, info: any) => {
+    if (isFlipped) return;
+    setIsFlipped(false);
     setIsDragging(false);
     const { offset } = info;
     onDragEnd(offset.x);
@@ -99,6 +127,15 @@ const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd, dragOffse
     controls.start({
       rotate: 0,
       translateX: 0,
+      transition: { duration: 0.5 },
+    });
+  };
+
+  const flipCard = () => {
+    if (isDragging) return;
+    setIsFlipped(!isFlipped);
+    controls.start({
+      rotateY: isFlipped ? 0 : 180,
       transition: { duration: 0.5 },
     });
   };
@@ -113,19 +150,40 @@ const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd, dragOffse
       onDragStart={handleDragStart}
       onDrag={handleDrag}
       onDragEnd={handleDragEnd}
-      style={{ x: dragOffset }}
+      style={{ x: dragOffset, width: "25vw", height: "80vh" }}
+      onClick={flipCard}
     >
-      <div className="w-full h-full">
-        <img
-          style={{ pointerEvents: "none" }}
-          src={imgSrc}
-          alt={imgAlt}
-          className="w-full h-full object-cover transition-all duration-300 brightness-80 group-hover:brightness-50"
-        />
-        <div className="absolute bottom-0 left-0 p-4">
-          <h2 className="text-white font-sans">{title}</h2>
+      <motion.div
+        className="w-full h-full"
+        initial="front"
+        animate={isFlipped ? "back" : "front"}
+      >
+        <div className="w-full h-full">
+          <img
+            style={{
+              pointerEvents: "none",
+              height: "80vh",
+              objectFit: "fill",
+            }}
+            src={imgSrc}
+            alt={imgAlt}
+            className="w-full h-full object-cover transition-all duration-300 brightness-80 group-hover:brightness-50"
+          />
+          <div className="absolute bottom-0 left-0 p-4">
+            <h2 className="text-white font-sans text-3xl">{title}</h2>
+          </div>
         </div>
-      </div>
+      </motion.div>
+      <motion.div
+        className="w-full h-full"
+        initial="back"
+        animate={isFlipped ? "front" : "back"}
+        style={{ visibility: isFlipped ? "visible" : "hidden" }} // Hide back when not flipped
+      >
+        <div className="absolute inset-0 bg-white bg-opacity-100" style={{ transform: "scale(-1, 1)" }}>
+          <Information name={title} age={age} type={type} needs={needs} description={description}/>
+        </div>
+      </motion.div>
     </motion.div>
   );
 };

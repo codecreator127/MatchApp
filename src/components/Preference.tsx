@@ -26,31 +26,31 @@ const Preferences: React.FC = () => {
 
   const pref: Preference[] = [
     {
-      name: "Location Preferences",
+      name: "Location",
       pref: ["Local", "Nationwide", "International"],
     },
     {
-      name: "Plant Maintenance Preferences",
+      name: "Plant Maintenance",
       pref: ["Low", "Medium", "High"],
     },
     {
-      name: "Climate Preferences",
+      name: "Climate",
       pref: ["Tropical", "Arid", "Temperate", "Cold"],
     },
     {
-      name: "Plant Size Preferences",
+      name: "Plant Size",
       pref: ["Small", "Medium", "Large", "Extra Large"],
     },
     {
-      name: "Sunlight Preferences",
+      name: "Sunlight",
       pref: ["Full Sun", "Partial Sun", "Shade"],
     },
     {
-      name: "Soil Type Preferences",
+      name: "Soil Type",
       pref: ["Moist", "Sandy", "Clay", "Loamy"],
     },
     {
-      name: "Watering Frequency Preferences",
+      name: "Watering Frequency",
       pref: ["Daily", "Weekly", "Bi-weekly", "Monthly"],
     },
   ];
@@ -93,6 +93,8 @@ const Preferences: React.FC = () => {
         });
 
         console.log("Preferences added to Firestore with ID: ", docRef.id);
+
+        window.location.href = "/swiper";
       }
     } catch (error) {
       console.error("Error adding preferences to Firestore:", error);
@@ -113,18 +115,18 @@ const Preferences: React.FC = () => {
         overflow={"scroll"}
         sx={{ backgroundColor: "white", borderRadius: 2 }}
       >
-        <h1 style={{ color: "black", fontSize: 25, marginBottom: 10 }}>
-          <b>What are you interested in?</b>
+        <h1 style={{ color: "black", fontSize: 25 }}>
+          <b>Plant Preferences</b>
         </h1>
 
         <Box height={540} sx={{ overflowY: "scroll" }}>
           {pref.map((preference, index) => (
-            <Box key={index}>
+            <Box key={index} p={2}>
               <Typography
                 variant="h6"
                 sx={{ color: "black", textAlign: "left" }}
               >
-                {preference.name}:
+                <b>{preference.name}</b>
               </Typography>
               <Stack direction="row" spacing={2}>
                 {preference.pref.map((option, idx) => (
@@ -136,7 +138,7 @@ const Preferences: React.FC = () => {
                     alignItems={"center"}
                     justifyContent={"center"}
                     sx={{
-                      border: "2px solid grey",
+                      border: "2px solid ",
                       borderRadius: 2,
                       cursor: "pointer",
                       opacity: selectedPreferences.some(
@@ -151,8 +153,11 @@ const Preferences: React.FC = () => {
                           pref.category === preference.name &&
                           pref.option === option
                       )
-                        ? "grey"
+                        ? "#8cb1a1"
                         : "transparent",
+                      "&:hover": {
+                        backgroundColor: "#c5d8cf",
+                      },
                     }}
                     onClick={() => handleSelection(preference.name, option)}
                   >
@@ -174,6 +179,10 @@ const Preferences: React.FC = () => {
             height: 55,
             fontSize: 18,
             borderRadius: 2,
+            backgroundColor: "#357960",
+            "&:hover": {
+              backgroundColor: "#234537",
+            },
           }}
           onClick={handleSave}
         >

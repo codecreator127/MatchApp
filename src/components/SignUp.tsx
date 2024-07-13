@@ -51,7 +51,7 @@ const SignUp: React.FC<SignUpProps> = ({ auth }) => {
 
       console.log("User added to Firestore successfully");
 
-      window.location.href = "/about";
+      window.location.href = "/preferences";
     } catch (error) {
       setError("Error creating account.");
       console.log("Signup error:", error);
