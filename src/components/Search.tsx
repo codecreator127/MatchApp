@@ -8,7 +8,7 @@ type SearchProps = {
 function Search({ search, setSearch }: SearchProps) {
   return (
     <>
-      <label className="mx-auto mt-40 relative bg-white min-w-sm max-w-2xl flex flex-col md:flex-row items-center justify-center border py-2 px-2 rounded-2xl gap-2 shadow-2xl focus-within:border-gray-300">
+      <label className="mx-auto relative bg-white min-w-sm max-w-2xl flex flex-col md:flex-row items-center justify-center border py-2 px-2 rounded-2xl gap-2 shadow-2xl focus-within:border-gray-300">
         <input
           id="search-bar"
           placeholder="Search for plants"
