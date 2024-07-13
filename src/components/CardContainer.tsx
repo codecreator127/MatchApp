@@ -5,28 +5,14 @@ import { searchImages } from "../app/api/pixabay/route";
 
 import { auth, db } from "../../firebase/firebase";
 import {
-  doc,
   collection,
-  addDoc,
-  getDoc,
   query,
   orderBy,
   getDocs,
   limit,
-  updateDoc,
 } from "firebase/firestore";
 import Modal from "./MatchPopUp";
 import { useRouter } from "next/navigation";
-
-interface Preferences {
-  [key: string]: string;
-}
-
-interface Plant {
-  name: string;
-  plantType: string;
-  caringGuide: string;
-}
 
 // Function to fetch the first document in the preferences collection
 async function fetchFirstPreferencesMap(userId: string) {

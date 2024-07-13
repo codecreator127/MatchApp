@@ -10,7 +10,6 @@ import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { addDoc, collection, doc } from "firebase/firestore";
 import { db, auth } from "../../firebase/firebase";
-import { CenterFocusStrong } from "@mui/icons-material";
 
 async function addPlantToCollection(
   plantName: string,
@@ -53,18 +52,18 @@ const Orders: React.FC = () => {
 
   const divs: { name: string; action: () => void }[] = [
     {
-      name: "Buy",
+      name: "BUY",
       action: () => {
         window.open(url + plantName, "_blank");
         router.push("/swiper");
       },
     },
     {
-      name: "Trade",
+      name: "TRADE",
       action: () => router.push("/swiper"),
     },
     {
-      name: "Sponsor",
+      name: "SPONSOR",
       action: () => router.push("/swiper"),
     },
   ];
@@ -81,45 +80,75 @@ const Orders: React.FC = () => {
   };
 
   return (
-    <>
-      <Card style={{ maxHeight: 1500 }}>
-        <CardHeader
-          title={`You've matched with ${plantName}!`}
-          subheader="You can now buy, trade or sponsor this plant"
-        />
-        <CardMedia
-          component="img"
-          style={{
-            borderRadius: "50%",
-            maxHeight: 250,
-            maxWidth: 250,
-          }}
-          image={`${image}`}
-          alt="Plant"
-        />
-        <CardContent>
-          <Stack spacing={2}>
-            {divs.map((div, index) => (
-              <Button
-                variant="contained"
-                key={index}
-                sx={{
-                  backgroundColor: "#8cb1a1",
-                  "&:hover": { backgroundColor: "#a8c4b8" },
-                  height: 50,
-                  fontSize: 18,
-                  borderRadius: 100,
-                  textTransform: "lowercase",
-                }}
-                onClick={() => handleClick(index)} // Add onClick handler here
-              >
-                {div.name} Plant
-              </Button>
-            ))}
-          </Stack>
-        </CardContent>
-      </Card>
-    </>
+    <div className="mx-auto bg-white shadow-md rounded-lg overflow-hidden h-[600px] w-[500px]">
+      <div className="p-4 text-center pt-10 font-bold">
+        <h3>IT'S A MATCH!</h3>
+        <h2 className="text-5xl font-bold mb-4 text-center pb-8">{plantName}</h2>
+        <div className="flex justify-center mb-4">
+          <img src={image ?? ""} alt={plantName ?? ""} className="object-cover w-full rounded-md h-80" />
+        </div>
+        <div className="flex justify-around">
+          {divs.map((div, index) => (
+            <Button
+              variant="contained"
+              key={index}
+              sx={{
+                backgroundColor: "#8cb1a1",
+                "&:hover": { backgroundColor: "#a8c4b8" },
+                height: 50,
+                width: 120,
+                margin: 1,
+                fontSize: 18,
+                borderRadius: 100,
+              }}
+              onClick={() => handleClick(index)}
+            >
+              {div.name}
+            </Button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    // <>
+    //   <Card style={{ maxHeight: 2000 }}>
+    //     <CardHeader
+    //       title={`You've matched with ${plantName}!`}
+    //       subheader="You can now buy, trade or sponsor this plant"
+    //     />
+    //     <CardMedia
+    //       component="img"
+    //       style={{
+    //         borderRadius: "50%",
+    //         maxHeight: 300,
+    //         maxWidth: 300,
+    //       }}
+    //       image={`${image}`}
+    //       alt="Plant"
+    //     />
+    //     <CardContent>
+    //       <Stack spacing={2}>
+    //         {divs.map((div, index) => (
+    //           <Button
+    //             variant="contained"
+    //             key={index}
+    //             sx={{
+    //               backgroundColor: "#8cb1a1",
+    //               "&:hover": { backgroundColor: "#a8c4b8" },
+    //               height: 50,
+    //               fontSize: 18,
+    //               borderRadius: 100,
+    //               textTransform: "lowercase",
+    //             }}
+    //             onClick={() => handleClick(index)} // Add onClick handler here
+    //           >
+    //             {div.name} Plant
+    //           </Button>
+    //         ))}
+    //       </Stack>
+    //     </CardContent>
+    //   </Card>
+    // </>
   );
 };
 
