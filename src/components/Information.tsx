@@ -11,7 +11,7 @@ interface InformationProps {
 function Information(info: InformationProps) {
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col overflow-auto">
       <div className="flex flex-col items-center justify-center bg-gray-800" >
         <div className="bg-white p-6 shadow-lg w-full max-w-md">
           <div className="mb-4">
