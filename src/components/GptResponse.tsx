@@ -42,8 +42,6 @@ export default function GptResponse() {
     if (user) {
       const userId = user.uid;
 
-      console.log("User ID:", userId);
-
       fetchFirstPreferencesMap(userId)
         .then((preferencesMap) => {
           if (preferencesMap) {
