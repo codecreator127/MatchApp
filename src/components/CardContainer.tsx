@@ -199,12 +199,13 @@ const CardContainer = () => {
   const [dragOffset, setDragOffset] = useState(0);
 
   const handleDragEnd = (offsetX: number) => {
+    setCurrentCard((prev) => (prev === cardData.length - 1 ? 0 : prev + 1));
     if (offsetX > 100) {
       setDirection("right");
-      setCurrentCard((prev) => (prev === cardData.length - 1 ? 0 : prev + 1));
+      // Function whe  swiping right (accept)
     } else if (offsetX < -100) {
       setDirection("left");
-      setCurrentCard((prev) => (prev === 0 ? cardData.length - 1 : prev - 1));
+      // Function when swiping left (ignore)
     }
     setDragOffset(0); // Reset drag offset after changing the card
   };
@@ -223,9 +224,9 @@ const CardContainer = () => {
                 transition={{ duration: 0.5 }}
               >
                 <Card
-                  title={card.name}
-                  imgSrc={card.plantType}
-                  imgAlt={card.caringGuide}
+                  title={card.title}
+                  imgSrc={card.imgSrc}
+                  imgAlt={card.imgAlt}
                   onDragEnd={handleDragEnd}
                   dragOffset={dragOffset}
                   setDragOffset={setDragOffset}
