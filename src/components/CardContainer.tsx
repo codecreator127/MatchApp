@@ -224,9 +224,10 @@ const CardContainer = () => {
                 transition={{ duration: 0.5 }}
               >
                 <Card
-                  title={card.title}
-                  imgSrc={card.imgSrc}
-                  imgAlt={card.imgAlt}
+                  description={card.caringGuide}
+                  title={card.name}
+                  imgSrc={card.plantType}
+                  imgAlt={card.caringGuide}
                   onDragEnd={handleDragEnd}
                   dragOffset={dragOffset}
                   setDragOffset={setDragOffset}
