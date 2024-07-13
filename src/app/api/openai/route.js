@@ -6,7 +6,7 @@ config();
 
 export async function POST(request) {
   const openai = new OpenAI({
-    apiKey: process.env.API_KEY,
+    apiKey: process.env.OPEN_AI_API_KEY,
   });
 
   // grab user input
