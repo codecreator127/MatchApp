@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import { AnimatePresence, motion } from "framer-motion";
-import { cardData } from "../constants/cardData";
-import { searchImages } from "../app/api/pixabay/route";
+import { searchImages } from "../app/api/pixabay/route"
 
 import { auth, db } from "../../firebase/firebase";
 import {
@@ -48,8 +47,6 @@ async function fetchFirstPreferencesMap(userId: string) {
     // Reference to the preferences collection
     const prefsCollectionRef = collection(db, `users/${userId}/preferences`);
 
-    // console.log("Preferences Collection Reference:", prefsCollectionRef);
-
     // Query to get the first document ordered by __name__ and limit to 1
     const q = query(prefsCollectionRef, orderBy("__name__"), limit(1));
     const querySnapshot = await getDocs(q);
@@ -75,7 +72,6 @@ async function fetchUserPreferences() {
 
     if (user) {
       const userId = user.uid;
-      console.log("User ID:", userId);
 
       const preferencesMap = await fetchFirstPreferencesMap(userId);
 
@@ -88,7 +84,6 @@ async function fetchUserPreferences() {
           .map(([preference, value]) => `${value} ${preference}`)
           .join(", ");
 
-        // console.log(transformedString);
         return transformedString;
       } else {
         console.log("No preferences found for the user.");
@@ -119,7 +114,6 @@ const CardContainer = () => {
         body: JSON.stringify({ preferences }),
       });
 
-      console.log("RESPONSE", response);
       const result = await response.json();
       return result;
     } catch (error) {
@@ -164,58 +158,63 @@ const CardContainer = () => {
 
   async function generatePlants() {
     const preferences = await fetchUserPreferences();
-    // console.log(preferences);
 
     if (preferences) {
       const output = await gptCall(preferences);
-      // console.log(output);
-
       const plantMap = parsePlants(output);
-      // console.log(plantMap);
       return plantMap;
     }
   }
   const user = auth.currentUser;
 
   const [cardData, setCardData] = useState<
-    { name: string; plantType: string; caringGuide: string }[]
+    { name: string; plantType: string; caringGuide: string; imgSrc: string; }[]
   >([
     {
-      name: "Bird of Paradise",
+      name: "Birds of Paradise",
       plantType: "Tropical Flowering Plant",
       caringGuide: "Place in bright, indirect light.",
+      imgSrc: "https://pixabay.com/get/g3c17b692fc2658adefb832447f7830f9a7b8bf4c8b0e831ac6630dcb371c45ca5c261d0f0cc31dda916b6f606b9d8cec98015d02d4b7ccd7d62a03aac791e9e4_640.jpg",
     },
     {
       name: "Areca Palm",
       plantType: "Tropical Palm Tree",
       caringGuide: "Thrives in bright, indirect light.",
+      imgSrc: "https://pixabay.com/get/g258ae454b5cbc21dfcc2c2d31716d9cf886a3d0d8048c8e7564aa13218dfd3d85ca665176ee9cbe893c9dfefb9f654da59179838198521139ad29300573aa6c0_640.jpg",
     },
     {
       name: "Peace Lily",
       plantType: "Tropical Flowering Plant",
       caringGuide: "Prefers shade and weekly watering.",
+      imgSrc: "https://pixabay.com/get/g579303d31bd7933116aeec7a45ce423c76b080d20e094db917856fa9006330ae6466c797574f1dc51c49f4c6fb74ee5b238c3650d77352d3a7cc9e4d818e5e70_640.jpg",
     },
   ]);
 
+  // function to replace whitespaces with '+' in the search query
+  const replaceSpaces = (query: string) => {
+    return query.replace(/\s/g, "+");
+  };
+
   useEffect(() => {
     generatePlants()
-      .then((data) => {
+      .then(async (data) => {
         if (data) {
           // Extract existing names from current cardData
           const existingNames = cardData.map((item) => item.name);
-
-          // console.log(existingNames);
 
           // Filter data to include only items whose names are not in cardData
           const uniqueItems = data.filter(
             (item) => !existingNames.includes(item.name)
           );
 
-          // console.log(uniqueItems);
-
           // Concatenate cardData and uniqueItems, then update state
-          setCardData((prevCardData) => [...prevCardData, ...uniqueItems]);
-          console.log(cardData);
+          setCardData((prevCardData) => [...prevCardData, ...uniqueItems.map(item => ({ ...item, imgSrc: "" }))]);
+
+          for (let i = 0; i < cardData.length; i++) {
+            const searchQuery = replaceSpaces(cardData[i].name);
+            const images = await searchImages(searchQuery);
+            cardData[i].imgSrc = images.hits[0].webformatURL;
+          }
         }
       })
       .catch((error) => {
@@ -228,13 +227,6 @@ const CardContainer = () => {
   const [currentCard, setCurrentCard] = useState(0);
   const [direction, setDirection] = useState<"left" | "right">("right");
   const [dragOffset, setDragOffset] = useState(0);
-
-  const query = "snake+plant";
-
-  React.useEffect(() => {
-    searchImages(query);
-  }, []);
-
   const [modalOpen, setModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -253,24 +245,24 @@ const CardContainer = () => {
       // Function when swiping left (ignore)
 
       generatePlants()
-        .then((data) => {
+        .then(async (data) => {
           if (data) {
             // Extract existing names from current cardData
             const existingNames = cardData.map((item) => item.name);
 
-            // console.log(existingNames);
+            for (let i = 0; i < cardData.length; i++) {
+              const searchQuery = replaceSpaces(cardData[i].name);
+              const images = await searchImages(searchQuery);
+              cardData[i].imgSrc = images.hits[0].webformatURL;
+            }
 
             // Filter data to include only items whose names are not in cardData
             const uniqueItems = data.filter(
               (item) => !existingNames.includes(item.name)
             );
 
-            // console.log(uniqueItems);
-
             // Concatenate cardData and uniqueItems, then update state
-            setCardData((prevCardData) => [...prevCardData, ...uniqueItems]);
-
-            console.log(cardData);
+            setCardData((prevCardData) => [...prevCardData, ...uniqueItems.map(item => ({ ...item, imgSrc: "" }))]);
           }
         })
         .catch((error) => {
@@ -298,14 +290,11 @@ const CardContainer = () => {
                   age={0}
                   description={card.caringGuide}
                   title={card.name}
-                  imgSrc={card.plantType}
+                  imgSrc={card.imgSrc}
                   imgAlt={card.caringGuide}
                   onDragEnd={handleDragEnd}
                   dragOffset={dragOffset}
-                  setDragOffset={setDragOffset}
-                  type={""}
-                  needs={""}
-                />
+                  setDragOffset={setDragOffset} type={""} needs={""} />
               </motion.div>
             )
         )}
