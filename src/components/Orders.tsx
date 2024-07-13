@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { addDoc, collection, doc } from "firebase/firestore";
 import { db, auth } from "../../firebase/firebase";
+import { CenterFocusStrong } from "@mui/icons-material";
 
 async function addPlantToCollection(
   plantName: string,
@@ -88,7 +89,11 @@ const Orders: React.FC = () => {
         />
         <CardMedia
           component="img"
-          style={{ borderRadius: "50%" }}
+          style={{
+            borderRadius: "50%",
+            maxHeight: 250,
+            maxWidth: 250,
+          }}
           image={`${image}`}
           alt="Plant"
         />
