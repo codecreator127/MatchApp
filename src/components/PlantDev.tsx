@@ -50,24 +50,26 @@ function PlantDex() {
 
   return (
     <>
-      <Typography variant="h2" sx={{ textAlign: "center", paddingTop: 10, paddingBottom: 10 }}>
+      <Typography variant="h2" sx={{ textAlign: "center", paddingTop: 5, paddingBottom: 5, backgroundColor: "#357960" }}>
         <b>PlantDex</b>
       </Typography>
-      <Grid container spacing={3} sx={{ backgroundColor: "white" }}>
-        {data.map((plant, index) => (
-          <Grid item xs={3.3} key={index}>
-            <Card sx={{ width: 300, height: 320, borderRadius: 3 }}>
-              <CardHeader title={plant.name} subheader={plant.type} />
-              <CardMedia component="img" image={plant.url} alt={plant.name} style={{ maxHeight: 160 }} />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  {plant.guide}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      <Box sx={{ backgroundColor: "#a8c4b8", paddingTop: 5, paddingBottom: 5, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Grid container spacing={3} sx={{ maxWidth: 1000 }}>
+          {data.map((plant, index) => (
+            <Grid item xs={4} key={index}>
+              <Card sx={{ width: 300, height: 310, borderRadius: 3 }}>
+                <CardHeader title={plant.name} subheader={plant.type} />
+                <CardMedia component="img" image={plant.url} alt={plant.name} style={{ maxHeight: 160 }} />
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                    {plant.guide}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </>
   );
 }
