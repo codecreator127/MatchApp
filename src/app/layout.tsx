@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 6;
-import "../config/db";
+import "../../firebase/firebase.js";
 
 const inter = Inter({ subsets: ["latin"] });
 
