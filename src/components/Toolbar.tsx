@@ -1,4 +1,4 @@
-import SocialMediaButtons from "./social_media_buttons";
+import NavigationButtons from "./NavigationButtons";
 import { motion } from "framer-motion";
 
 interface NavSideProps {
@@ -48,12 +48,11 @@ export default function Toolbar({
       exit="exit"
       className="h-screen bg-primary fixed right-0 top-0 text-white z-10"
     >
-      <div className="box-border h-full px-24 pt-10 flex flex-col justify-between">
+      <div className="box-border h-full px-6 pt-10 flex flex-col justify-between">
         <div className="flex flex-col text-xl gap-3 mt-20">
-          <SocialMediaButtons />
+          <NavigationButtons />
         </div>
       </div>
     </motion.div>
   );
 }
-
