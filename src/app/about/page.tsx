@@ -2,7 +2,7 @@
 
 import Heading from "@/components/Heading";
 import Header from "@/components/header";
-import Footer from "@/components/footer";
+import Footer from "@/components/Toolbar";
 import Form from "@/components/Form";
 // import Rotatable from "@/components/RotatableComponent";
 import HomeBackground from "../../../public/homeBackgroundGreen.png";

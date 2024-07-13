@@ -1,48 +1,132 @@
-import React from "react";
-import Link from "next/link";
-import Animation from "./Animation";
-import { motion } from "framer-motion";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
 
 interface CardProps {
   title: string;
-  description: string;
   imgSrc: string;
   imgAlt: string;
-  linkUrl: string;
+  onDragEnd: (offsetX: number) => void;
+  dragOffset: number;
+  setDragOffset: (offset: number) => void;
 }
 
-const Card: React.FC<CardProps> = ({
-  title,
-  description,
-  imgSrc,
-  imgAlt,
-  linkUrl,
-}) => {
+const Card: React.FC<CardProps> = ({ title, imgSrc, imgAlt, onDragEnd, dragOffset, setDragOffset }) => {
+  const controls = useAnimation();
+  const [isLeaning, setIsLeaning] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (isLeaning) return;
+
+      if (event.key === "ArrowRight") {
+        setIsLeaning(true);
+        controls.start({
+          rotate: 5,
+          originX: "0%",
+          originY: "100%",
+          translateX: 10,
+          transition: { duration: 0.5 },
+        });
+      } else if (event.key === "ArrowLeft") {
+        setIsLeaning(true);
+        controls.start({
+          rotate: -5,
+          originX: "100%",
+          originY: "100%",
+          translateX: -10,
+          transition: { duration: 0.5 },
+        });
+      }
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (
+        isLeaning &&
+        (event.key === "ArrowRight" || event.key === "ArrowLeft")
+      ) {
+        setIsLeaning(false);
+        controls.start({
+          rotate: 0,
+          translateX: 0,
+          transition: { duration: 0.5 },
+        });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [controls, isLeaning]);
+
+  const handleDragStart = () => {
+    setIsDragging(true);
+  };
+
+  const handleDrag = (event: any, info: any) => {
+    const { offset } = info;
+    setDragOffset(offset.x);
+    if (offset.x > 0) {
+      controls.start({
+        rotate: 5,
+        originX: "0%",
+        originY: "100%",
+        translateX: 10,
+        transition: { duration: 0.2 },
+      });
+    } else if (offset.x < 0) {
+      controls.start({
+        rotate: -5,
+        originX: "100%",
+        originY: "100%",
+        translateX: -10,
+        transition: { duration: 0.2 },
+      });
+    }
+  };
+
+  const handleDragEnd = (event: any, info: any) => {
+    setIsDragging(false);
+    const { offset } = info;
+    onDragEnd(offset.x);
+
+    controls.start({
+      rotate: 0,
+      translateX: 0,
+      transition: { duration: 0.5 },
+    });
+  };
+
   return (
-    <Link
-      href={linkUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      passHref
-      className="transform hover:scale-105 transition-transform duration-300"
+    <motion.div
+      className={`card bg-base-100 shadow-xl relative overflow-hidden group ${isDragging ? "dragging" : ""} w-full h-full`}
+      animate={controls}
+      drag="x"
+      dragElastic={0.1}
+      dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+      onDragStart={handleDragStart}
+      onDrag={handleDrag}
+      onDragEnd={handleDragEnd}
+      style={{ x: dragOffset }}
     >
-      <Animation>
-        <div className="card bg-base-100 shadow-xl relative overflow-hidden group">
-          <img
-            src={imgSrc}
-            alt={imgAlt}
-            className="w-full h-60 object-cover transition-all duration-300 brightness-80 group-hover:brightness-50"
-          />
-          <div className="card-body p-4 bg-primary bg-opacity-50 absolute top-0 left-0 w-full h-full transition-opacity duration-300 opacity-0 group-hover:opacity-100">
-            <h2 className="card-title text-primary-content font-sans">
-              {title}
-            </h2>
-            <p className="text-primary-content font-sans">{description}</p>
-            <div className="card-actions justify-end"></div>
-          </div>
+      <div className="w-full h-full">
+        <img
+          style={{ pointerEvents: "none" }}
+          src={imgSrc}
+          alt={imgAlt}
+          className="w-full h-full object-cover transition-all duration-300 brightness-80 group-hover:brightness-50"
+        />
+        <div className="absolute bottom-0 left-0 p-4">
+          <h2 className="text-white font-sans">{title}</h2>
         </div>
-      </Animation>
-    </Link>
+      </div>
+    </motion.div>
   );
 };
 
