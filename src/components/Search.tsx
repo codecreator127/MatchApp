@@ -5,83 +5,6 @@ type SearchProps = {
   setSearch: (search: string) => void;
 };
 
-async function gptCall(preferences: string) {
-  try {
-    const response = await fetch("/api/openai", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ preferences }),
-    });
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error("Error:", error);
-    setError("Error: Could not fetch response");
-  } finally {
-    setLoading(false);
-  }
-}
-
-function parsePlants(
-  text: string
-): { name: string; plantType: string; caringGuide: string }[] {
-  const plantEntries = text.split(/\d+\.\s+/); // Split text based on numbers followed by a dot and optional whitespace
-
-  const plants = plantEntries.map((entry) => {
-    const lines = entry.trim().split("\n");
-    const plantInfo: {
-      name: string;
-      plantType: string;
-      caringGuide: string;
-    } = { name: "", plantType: "", caringGuide: "" };
-
-    lines.forEach((line) => {
-      if (line.startsWith("Name:")) {
-        plantInfo.name = line.split(": ")[1].trim();
-      } else if (line.startsWith("Plant Type:")) {
-        plantInfo.plantType = line.split(": ")[1].trim();
-      } else if (line.startsWith("Caring Guide:")) {
-        plantInfo.caringGuide = line.split(": ")[1].trim();
-      }
-    });
-
-    return plantInfo;
-  });
-
-  return plants.filter(
-    (plant) =>
-      plant.name !== "" && plant.plantType !== "" && plant.caringGuide !== ""
-  );
-}
-
-async function generatePlants(scenario: string) {
-  const output = await gptCall(scenario);
-  const plantMap = parsePlants(output);
-  return plantMap;
-}
-
-// function to generate plants + images underneath
-
-// generatePlants()
-// .then(async (data) => {
-//   if (data) {
-
-//     // gets images
-//     for (let i = 0; i < cardData.length; i++) {
-//       const searchQuery = replaceSpaces(cardData[i].name);
-//       const images = await searchImages(searchQuery);
-//       cardData[i].imgSrc = images.hits[0].webformatURL;
-//     }
-//   }
-// })
-// .catch((error) => {
-//   console.error("Error in generatePlants:", error);
-//   // Optionally handle error state or rethrow if necessary
-// });
-
 function Search({ search, setSearch }: SearchProps) {
   return (
     <>
@@ -130,10 +53,3 @@ function Search({ search, setSearch }: SearchProps) {
 }
 
 export default Search;
-function setError(arg0: string) {
-  throw new Error("Function not implemented.");
-}
-
-function setLoading(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}
