@@ -56,16 +56,16 @@ const Orders: React.FC = () => {
       name: "Buy",
       action: () => {
         window.open(url + plantName, "_blank");
-        router.push("/swiper");
+        router.push("/dex");
       },
     },
     {
       name: "Trade",
-      action: () => router.push("/swiper"),
+      action: () => router.push("/dex"),
     },
     {
       name: "Sponsor",
-      action: () => router.push("/swiper"),
+      action: () => router.push("/dex"),
     },
   ];
 
