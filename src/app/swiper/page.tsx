@@ -12,10 +12,9 @@ export default function Home() {
   const [isActive, setActive] = useState(false);
 
   return (
-    <div className="bg-gray-100 relative min-h-screen">
+    <div className="bg-gray-100 relative min-h-screen" style={{ backgroundColor: "#c5d8cf" }}>
       <img 
-        src="https://cdn.discordapp.com/attachments/1261172593835249738/1261832391018811512/Pl.png?ex=6694647d&is=669312fd&hm=4cf9da2525a08917f0f31dc8645506977d6143a74b03e87d88aa8b68bd2c3e73&" 
-        alt="Logo"
+        src="https://cdn.discordapp.com/attachments/1261172593835249738/1261832391018811512/Pl.png?ex=6694647d&is=669312fd&hm=4cf9da2525a08917f0f31dc8645506977d6143a74b03e87d88aa8b68bd2c3e73&"
         className="absolute top-5 left-5"
         style={{ width: 150 }}
       />

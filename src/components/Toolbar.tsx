@@ -47,6 +47,7 @@ export default function Toolbar({
       animate="enter"
       exit="exit"
       className="h-screen bg-primary fixed right-0 top-0 text-white z-10"
+      style={{ backgroundColor: "#a8c4b8" }}
     >
       <div className="box-border h-full px-6 pt-10 flex flex-col justify-between">
         <div className="flex flex-col text-xl gap-3 mt-20">
