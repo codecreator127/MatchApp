@@ -8,6 +8,7 @@ import { searchImages } from "../api/pixabay/route";
 
 export default function Home() {
   const [search, setSearch] = useState("");
+  const [enterPressed, setEnterPressed] = useState(false);
 
   const [cardData, setCardData] = useState<
     { name: string; plantType: string; caringGuide: string; imgUrl: string }[]
@@ -142,9 +143,9 @@ export default function Home() {
 
   useEffect(() => {
     console.log(search);
-    async function fetchData() {
+    async function fetchData(searchParam: string) {
       try {
-        const data = await generatePlants(search);
+        const data = await generatePlants(searchParam);
 
         if (data) {
           // Update cardData with imgSrc included
@@ -168,83 +169,18 @@ export default function Home() {
       }
     }
 
-    fetchData();
-  }, [search]);
+    fetchData(search);
+  }, [enterPressed]);
 
-  // const plants = [
-  //   {
-  //     id: 1,
-  //     name: "Plant 1",
-  //     species: "Species 1",
-  //     summary: "This is plant 1",
-  //     description:
-  //       "Plant 1 is really cool and native to place. It is a great plant to have in your garden.",
-  //     wateringFrequency: "Once a week",
-  //     maintenance: "Low",
-  //     image: "https://via.placeholder.com/150",
-  //     imageAlt: "Plant 1",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Plant 2",
-  //     species: "Species 2",
-  //     summary: "This is plant 2",
-  //     description:
-  //       "Plant 2 is really cool and native to place. It is a great plant to have in your garden.",
-  //     wateringFrequency: "Once a week",
-  //     maintenance: "Low",
-  //     image: "https://via.placeholder.com/150",
-  //     imageAlt: "Plant 2",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Plant 3",
-  //     species: "Species 3",
-  //     summary: "This is plant 3",
-  //     description:
-  //       "Plant 3 is really cool and native to place. It is a great plant to have in your garden.",
-  //     wateringFrequency: "Once a week",
-  //     maintenance: "Low",
-  //     image: "https://via.placeholder.com/150",
-  //     imageAlt: "Plant 3",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Plant 4",
-  //     species: "Species 4",
-  //     summary: "This is plant 4",
-  //     description:
-  //       "Plant 4 is really cool and native to place. It is a great plant to have in your garden.",
-  //     wateringFrequency: "Once a week",
-  //     maintenance: "Low",
-  //     image: "https://via.placeholder.com/150",
-  //     imageAlt: "Plant 4",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Plant 5",
-  //     species: "Species 5",
-  //     summary: "This is plant 5",
-  //     description:
-  //       "Plant 5 is really cool and native to place. It is a great plant to have in your garden.",
-  //     wateringFrequency: "Once a week",
-  //     maintenance: "Low",
-  //     image: "https://via.placeholder.com/150",
-  //     imageAlt: "Plant 5",
-  //   },
-  // ];
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      setEnterPressed((prev) => !prev); // Toggle to ensure useEffect triggers on every Enter press
+    }
+  };
 
-  const plants = cardData.map((plant, index) => ({
-    id: index + 1,
-    name: plant.name,
-    species: plant.plantType, // Assuming plantType is species
-    summary: `This is ${plant.name}`,
-    description: `${plant.caringGuide}`,
-    wateringFrequency: "Once a week", // Assuming a default value
-    maintenance: "Low", // Assuming a default value
-    image: plant.imgUrl,
-    imageAlt: plant.name,
-  }));
+  const handleSearchClick = () => {
+    setEnterPressed((prev) => !prev); // Toggle to ensure useEffect triggers on search button click
+  };
 
   return (
     <>
@@ -263,7 +199,12 @@ export default function Home() {
         className="bg-cover bg-center"
         style={{ backgroundColor: "gray", paddingBottom: 30 }}
       >
-        <Search search={search} setSearch={setSearch} />
+        <Search
+          search={search}
+          setSearch={setSearch}
+          onPress={handleKeyPress}
+          onButtonClick={handleSearchClick}
+        />
       </div>
       <Box
         height={500}
@@ -277,13 +218,9 @@ export default function Home() {
         }}
       >
         <Stack spacing={2}>
-          {plants
-            .filter((plant) =>
-              plant.name.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((plant) => (
-              <ResultCard key={plant.id} plant={plant} />
-            ))}
+          {cardData.map((plant) => (
+            <ResultCard key={plant.name} plant={plant} />
+          ))}
         </Stack>
       </Box>
     </>
