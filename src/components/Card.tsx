@@ -6,9 +6,7 @@ import Information from "./Information";
 
 interface CardProps {
   title: string;
-  age: number;
   type: string;
-  needs: string;
   description: string;
   imgSrc: string;
   imgAlt: string;
@@ -19,9 +17,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({
   title,
-  age,
   type,
-  needs,
   description,
   imgSrc,
   imgAlt,
@@ -180,8 +176,11 @@ const Card: React.FC<CardProps> = ({
         animate={isFlipped ? "front" : "back"}
         style={{ visibility: isFlipped ? "visible" : "hidden" }} // Hide back when not flipped
       >
-        <div className="absolute inset-0 bg-white bg-opacity-100" style={{ transform: "scale(-1, 1)" }}>
-          <Information name={title} age={age} type={type} needs={needs} description={description}/>
+        <div
+          className="absolute inset-0 bg-white bg-opacity-100"
+          style={{ transform: "scale(-1, 1)" }}
+        >
+          <Information name={title} type={type} description={description} />
         </div>
       </motion.div>
     </motion.div>

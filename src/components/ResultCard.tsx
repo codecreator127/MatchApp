@@ -7,7 +7,12 @@ import Typography from "@mui/material/Typography";
 import type { Plant } from "@/types/types.d.ts";
 
 type ResultCardProps = {
-  plant: Plant;
+  plant: {
+    name: string;
+    plantType: string;
+    caringGuide: string;
+    imgUrl: string;
+  };
 };
 
 function ResultCard(props: ResultCardProps) {
@@ -17,8 +22,8 @@ function ResultCard(props: ResultCardProps) {
         <CardMedia
           component="img"
           sx={{ width: 180, height: 160 }}
-          image={props.plant.image}
-          alt={props.plant.imageAlt}
+          image={props.plant.imgUrl}
+          alt={props.plant.name}
         />
         <Box
           sx={{
@@ -38,7 +43,7 @@ function ResultCard(props: ResultCardProps) {
               color="text.secondary"
               component="div"
             >
-              {props.plant.description}
+              {props.plant.caringGuide}
             </Typography>
           </CardContent>
         </Box>
