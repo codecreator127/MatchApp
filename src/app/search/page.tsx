@@ -14,6 +14,7 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [isActive, setActive] = useState(false);
   const [enterPressed, setEnterPressed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [cardData, setCardData] = useState<
     { name: string; plantType: string; caringGuide: string; imgUrl: string }[]
@@ -33,9 +34,6 @@ export default function Home() {
       return result;
     } catch (error) {
       console.error("Error:", error);
-      // setError("Error: Could not fetch response");
-    } finally {
-      // setLoading(false);
     }
   }
 
@@ -145,10 +143,12 @@ export default function Home() {
 
           // Set the updated cardData
           setCardData(updatedCardData);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error in fetchData:", error);
         // Optionally handle error state or rethrow if necessary
+        setLoading(false);
       }
     }
 
@@ -158,11 +158,13 @@ export default function Home() {
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === "Enter") {
       setEnterPressed((prev) => !prev); // Toggle to ensure useEffect triggers on every Enter press
+      setLoading(true);
     }
   };
 
   const handleSearchClick = () => {
     setEnterPressed((prev) => !prev); // Toggle to ensure useEffect triggers on search button click
+    setLoading(true);
   };
 
   return (
@@ -201,11 +203,23 @@ export default function Home() {
           paddingBottom: 5,
         }}
       >
-        <Stack spacing={2}>
-          {cardData.map((plant) => (
-            <ResultCard key={plant.name} plant={plant} />
-          ))}
-        </Stack>
+        {loading ? (
+          <Typography variant="body1" align="center">
+            Loading...
+          </Typography>
+        ) : (
+          <Stack spacing={2}>
+            {cardData.length === 0 ? (
+              <Typography variant="body1" align="center">
+                No results found.
+              </Typography>
+            ) : (
+              cardData.map((plant) => (
+                <ResultCard key={plant.name} plant={plant} />
+              ))
+            )}
+          </Stack>
+        )}
       </Box>
 
       <div className="fixed right-5 top-5">
