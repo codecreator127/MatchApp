@@ -4,13 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { searchImages } from "../app/api/pixabay/route";
 
 import { auth, db } from "../../firebase/firebase";
-import {
-  collection,
-  query,
-  orderBy,
-  getDocs,
-  limit,
-} from "firebase/firestore";
+import { collection, query, orderBy, getDocs, limit } from "firebase/firestore";
 import Modal from "./MatchPopUp";
 import { useRouter } from "next/navigation";
 
@@ -306,7 +300,6 @@ const CardContainer = () => {
       setTimeout(() => {
         navigateToOrders(
           cardData[currentCard].name,
-          // "https://media.post.rvohealth.io/wp-content/uploads/2022/01/snake-plant-detail-732x549-thumbnail-732x549.jpg",
           cardData[currentCard].imgSrc,
           cardData[currentCard].caringGuide,
           cardData[currentCard].plantType
@@ -366,7 +359,7 @@ const CardContainer = () => {
                 transition={{ duration: 0.5 }}
               >
                 <Card
-                  age={0}
+                  type={card.plantType}
                   description={card.caringGuide}
                   title={card.name}
                   imgSrc={card.imgSrc}
@@ -374,8 +367,6 @@ const CardContainer = () => {
                   onDragEnd={handleDragEnd}
                   dragOffset={dragOffset}
                   setDragOffset={setDragOffset}
-                  type={""}
-                  needs={""}
                 />
               </motion.div>
             )

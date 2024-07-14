@@ -73,7 +73,7 @@ function PlantDex() {
           setIsLoading(false);
         }
       } else {
-        setError("No user logged in");
+        setError("Loading...");
         setIsLoading(false);
       }
     }
