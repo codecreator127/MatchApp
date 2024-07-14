@@ -11,6 +11,7 @@ type ResultCardProps = {
     name: string;
     plantType: string;
     caringGuide: string;
+    description: string;
     imgUrl: string;
   };
 };
@@ -43,7 +44,7 @@ function ResultCard(props: ResultCardProps) {
               color="text.secondary"
               component="div"
             >
-              {props.plant.caringGuide}
+              {props.plant.description}
             </Typography>
           </CardContent>
         </Box>

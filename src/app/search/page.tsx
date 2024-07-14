@@ -15,32 +15,9 @@ export default function Home() {
   const [isActive, setActive] = useState(false);
   const [enterPressed, setEnterPressed] = useState(false);
 
-
   const [cardData, setCardData] = useState<
     { name: string; plantType: string; caringGuide: string; imgUrl: string }[]
-  >([
-    {
-      name: "Birds of Paradise",
-      plantType: "Tropical Flowering Plant",
-      caringGuide: "Place in bright, indirect light.",
-      imgUrl:
-        "https://pixabay.com/get/g3c17b692fc2658adefb832447f7830f9a7b8bf4c8b0e831ac6630dcb371c45ca5c261d0f0cc31dda916b6f606b9d8cec98015d02d4b7ccd7d62a03aac791e9e4_640.jpg",
-    },
-    {
-      name: "Areca Palm",
-      plantType: "Tropical Palm Tree",
-      caringGuide: "Thrives in bright, indirect light.",
-      imgUrl:
-        "https://pixabay.com/get/g258ae454b5cbc21dfcc2c2d31716d9cf886a3d0d8048c8e7564aa13218dfd3d85ca665176ee9cbe893c9dfefb9f654da59179838198521139ad29300573aa6c0_640.jpg",
-    },
-    {
-      name: "Peace Lily",
-      plantType: "Tropical Flowering Plant",
-      caringGuide: "Prefers shade and weekly watering.",
-      imgUrl:
-        "https://pixabay.com/get/g579303d31bd7933116aeec7a45ce423c76b080d20e094db917856fa9006330ae6466c797574f1dc51c49f4c6fb74ee5b238c3650d77352d3a7cc9e4d818e5e70_640.jpg",
-    },
-  ]);
+  >([]);
 
   async function gptCall(preferences: string) {
     try {
