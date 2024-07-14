@@ -138,7 +138,6 @@ const Preferences: React.FC = () => {
                     alignItems={"center"}
                     justifyContent={"center"}
                     sx={{
-                      border: "2px solid ",
                       borderRadius: 2,
                       cursor: "pointer",
                       opacity: selectedPreferences.some(
