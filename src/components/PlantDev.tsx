@@ -102,6 +102,7 @@ function PlantDex() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          height: "100vh"
         }}
       >
         <Grid container spacing={3} sx={{ maxWidth: 1000 }}>
