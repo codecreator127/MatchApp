@@ -15,7 +15,7 @@ export default function Ordering() {
   const [isActive, setActive] = useState(false);
 
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen w-screen bg-[#e2ebe7]">
       <div className="h-full w-2/5 mx-auto flex justify-center items-center">
         <Orders />
       </div>

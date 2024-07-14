@@ -19,7 +19,7 @@ export const AnimatedHamburger: React.FC<AnimatedHamburgerProps> = ({
           animate={isActive ? "open" : "closed"}
         >
           <motion.span
-            className="absolute h-1 w-8 bg-primary-content"
+            className="absolute h-1 w-8 bg-black"
             style={{ left: "50%", top: "35%", x: "-50%", y: "-50%" }}
             variants={{
               open: { rotate: [0, 0, 45], top: ["35%", "50%", "50%"] },
@@ -27,7 +27,7 @@ export const AnimatedHamburger: React.FC<AnimatedHamburgerProps> = ({
             }}
           />
           <motion.span
-            className="absolute h-1 w-8 bg-primary-content"
+            className="absolute h-1 w-8 bg-black"
             style={{ left: "50%", top: "50%", x: "-50%", y: "-50%" }}
             variants={{
               open: { rotate: [0, 0, -45] },
@@ -35,7 +35,7 @@ export const AnimatedHamburger: React.FC<AnimatedHamburgerProps> = ({
             }}
           />
           <motion.span
-            className="absolute h-1 w-8 bg-primary-content"
+            className="absolute h-1 w-8 bg-black"
             style={{ left: "50%", bottom: "35%", x: "-50%", y: "50%" }}
             variants={{
               open: { rotate: [0, 0, 45], bottom: ["35%", "50%", "50%"] },
