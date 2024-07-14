@@ -36,15 +36,15 @@ const Login: React.FC<LoginProps> = ({ auth }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-pink-500 to-orange-400 p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen" style={{ backgroundColor: "#c5d8cf" }}>
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
         <div className="mb-8 text-center">
-          {/* <Image
-            src="/tinder-logo.png"  // Replace with your logo path
-            alt="Tinder Logo"
-            width={80}
-            height={80}
-          /> */}
+          <img 
+            src="https://cdn.discordapp.com/attachments/1261172593835249738/1261832766866329650/Pl_1.png?ex=669464d7&is=66931357&hm=b27cf7a57773319e4c01df7c58b56664735e897e71d4df2245986b5f50281aae&" 
+            alt="Logo"
+            className="mx-auto mb-4"
+            style={{ width: 90 }}
+          />
         </div>
 
         <h1 className="text-3xl font-bold text-center mb-6">Sign in</h1>
@@ -78,7 +78,8 @@ const Login: React.FC<LoginProps> = ({ auth }) => {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-pink-500 to-orange-400 text-white font-bold py-3 px-4 rounded-full hover:opacity-90 transition duration-300"
+            className="w-full text-white font-bold py-3 px-4 rounded-full hover:opacity-90 transition duration-300"
+            style={{ backgroundColor: "#357960" }}
           >
             Log In
           </button>
@@ -87,7 +88,7 @@ const Login: React.FC<LoginProps> = ({ auth }) => {
         {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
 
         <div className="mt-6 text-center">
-          <Link href="/signup" className="text-pink-500 hover:underline">
+          <Link href="/signup" className="hover:underline" style={{ color: "#357960" }}>
             Sign Up
           </Link>
         </div>

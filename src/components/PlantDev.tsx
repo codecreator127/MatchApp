@@ -91,15 +91,7 @@ function PlantDex() {
 
   return (
     <>
-      <Typography
-        variant="h2"
-        sx={{
-          textAlign: "center",
-          paddingTop: 5,
-          paddingBottom: 5,
-          backgroundColor: "#357960",
-        }}
-      >
+      <Typography variant="h2" sx={{ textAlign: "center", paddingTop: 5, paddingBottom: 5, backgroundColor: "#357960", color: "white" }}>
         <b>PlantDex</b>
       </Typography>
       <Box

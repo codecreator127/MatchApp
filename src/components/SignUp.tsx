@@ -55,8 +55,16 @@ const SignUp: React.FC<SignUpProps> = ({ auth }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-500 to-purple-400 p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen " style={{ backgroundColor: "#c5d8cf" }}>
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
+        <div className="mb-8 text-center">
+          <img 
+            src="https://cdn.discordapp.com/attachments/1261172593835249738/1261832766866329650/Pl_1.png?ex=669464d7&is=66931357&hm=b27cf7a57773319e4c01df7c58b56664735e897e71d4df2245986b5f50281aae&" 
+            alt="Logo"
+            className="mx-auto mb-4"
+            style={{ width: 90 }}
+          />
+        </div>
         <h1 className="text-3xl font-bold text-center mb-6">Sign Up</h1>
 
         <p className="text-center text-gray-600 mb-6">
@@ -98,7 +106,8 @@ const SignUp: React.FC<SignUpProps> = ({ auth }) => {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-500 to-purple-400 text-white font-bold py-3 px-4 rounded-full hover:opacity-90 transition duration-300"
+            className="w-full text-white font-bold py-3 px-4 rounded-full hover:opacity-90 transition duration-300"
+            style={{ backgroundColor: "#357960" }}
           >
             Sign Up
           </button>
@@ -109,7 +118,7 @@ const SignUp: React.FC<SignUpProps> = ({ auth }) => {
         <div className="mt-6 text-center">
           <p className="text-gray-600">
             Already have an account?{" "}
-            <Link href="/login" className="text-blue-500 hover:underline">
+            <Link href="/login" className="hover:underline" style={{ color: "#357960" }}>
               Log In
             </Link>
           </p>
