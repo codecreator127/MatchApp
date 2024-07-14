@@ -55,16 +55,16 @@ const Orders: React.FC = () => {
       name: "BUY",
       action: () => {
         window.open(url + plantName, "_blank");
-        router.push("/swiper");
+        router.push("/dex");
       },
     },
     {
       name: "TRADE",
-      action: () => router.push("/swiper"),
+      action: () => router.push("/dex"),
     },
     {
       name: "SPONSOR",
-      action: () => router.push("/swiper"),
+      action: () => router.push("/dex"),
     },
   ];
 
@@ -83,9 +83,15 @@ const Orders: React.FC = () => {
     <div className="mx-auto bg-white shadow-md rounded-lg overflow-hidden h-[600px] w-[500px]">
       <div className="p-4 text-center pt-10 font-bold">
         <h3>IT'S A MATCH!</h3>
-        <h2 className="text-5xl font-bold mb-4 text-center pb-8">{plantName}</h2>
+        <h2 className="text-5xl font-bold mb-4 text-center pb-8">
+          {plantName}
+        </h2>
         <div className="flex justify-center mb-4">
-          <img src={image ?? ""} alt={plantName ?? ""} className="object-cover w-full rounded-md h-80" />
+          <img
+            src={image ?? ""}
+            alt={plantName ?? ""}
+            className="object-cover w-full rounded-md h-80"
+          />
         </div>
         <div className="flex justify-around">
           {divs.map((div, index) => (

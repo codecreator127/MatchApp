@@ -5,8 +5,13 @@ import Search from "@/components/Search";
 import ResultCard from "@/components/ResultCard";
 import { Box, Stack, Typography } from "@mui/material";
 
+import { AnimatedHamburger } from "@/components/AnimatedHamburger";
+import Toolbar from "@/components/Toolbar";
+import { AnimatePresence } from "framer-motion";
+
 export default function Home() {
   const [search, setSearch] = useState("");
+  const [isActive, setActive] = useState(false);
 
   const plants = [
     {
@@ -99,7 +104,7 @@ export default function Home() {
           paddingTop: 5,
           paddingRight: 50,
           paddingLeft: 50,
-          paddingBottom: 5
+          paddingBottom: 5,
         }}
       >
         <Stack spacing={2}>
@@ -112,6 +117,13 @@ export default function Home() {
             ))}
         </Stack>
       </Box>
+
+      <div className="fixed right-5 top-5">
+        <AnimatedHamburger isActive={isActive} setActive={setActive} />
+        <AnimatePresence mode="wait">
+          {isActive && <Toolbar setActive={setActive} />}
+        </AnimatePresence>
+      </div>
     </>
   );
 }
