@@ -8,6 +8,8 @@ Hackathon Theme - Hack for Humanity
 * 📚 PlantDex: Keep track of all your beloved plants.
 * 🛒 Buy, Trade, or Sponsor: Purchase, exchange, or sponsor plants in a sanctuary.
 
+
+
 ## Tech Stack
 * React
 * Next.js
