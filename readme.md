@@ -1,10 +1,24 @@
-# Read Me!
+# Plantr
+Project developed at the DEVS Hackathon 2024 (48hr)
 
-example website, first project for localhost.
+## Tech Stack
+* React
+* Next.js
+* TypeScript
+* Firebase
+* TailwindCSS
+* OpenAI API
+* Pixabay API
 
-Documentation: https://www.notion.so/Startup-37f44ac062f0400a92e5f0aae49ad20c
+## Developers
+* John Lin
+* Tony Lim
+* Adam Bodicoat
+* Hayley Smith
+* Owen Li
+* Kevin Cheung
 
-# Dev set up information
+## Dev set up information
 
 `npm i`
 
@@ -12,19 +26,13 @@ Documentation: https://www.notion.so/Startup-37f44ac062f0400a92e5f0aae49ad20c
 or
 `yarn install daisyui`
 
-# Stack
+## To setup OpenAI and Pixabay's APIs
+Add in the root of the project a file named `.env.local` and add your OpenAI and Pixabay API keys
 
-Next.js
-TypeScript
-TailwindCSS, DaisyUI
-
-Terraform
-Github Actions
-Vercel
-
-Jest
-Eslint
-Prettier
+```
+OPEN_AI_API_KEY = YOUR-OPENAI-KEY
+PIXABAY_API_KEY = YOUR-PIXABAY-KEY
+```
 
 ## Getting Started
 
