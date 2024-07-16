@@ -8,7 +8,7 @@ import "../../firebase/firebase.js";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Plantify",
+  title: "Plantr",
   description: "Gotta plant 'em all!",
 };
 

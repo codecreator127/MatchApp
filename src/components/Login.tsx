@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useState, FormEvent } from "react";
 import { Auth, signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
+import logo from "../../public/logo.png";
 
 interface LoginProps {
   auth: Auth;
@@ -36,14 +37,17 @@ const Login: React.FC<LoginProps> = ({ auth }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen" style={{ backgroundColor: "#c5d8cf" }}>
+    <div
+      className="flex flex-col items-center justify-center min-h-screen"
+      style={{ backgroundColor: "#c5d8cf" }}
+    >
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
         <div className="mb-8 text-center">
-          <img 
-            src="https://cdn.discordapp.com/attachments/1261172593835249738/1261832766866329650/Pl_1.png?ex=669464d7&is=66931357&hm=b27cf7a57773319e4c01df7c58b56664735e897e71d4df2245986b5f50281aae&" 
+          <img
+            src={logo.src}
             alt="Logo"
             className="mx-auto mb-4"
-            style={{ width: 90 }}
+            style={{ width: 200 }}
           />
         </div>
 
@@ -88,7 +92,11 @@ const Login: React.FC<LoginProps> = ({ auth }) => {
         {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
 
         <div className="mt-6 text-center">
-          <Link href="/signup" className="hover:underline" style={{ color: "#357960" }}>
+          <Link
+            href="/signup"
+            className="hover:underline"
+            style={{ color: "#357960" }}
+          >
             Sign Up
           </Link>
         </div>
