@@ -1,5 +1,6 @@
 # Plantr
 Project developed at the DEVS Hackathon 2024 (48hr)
+(Team Localhost)
 
 ## Tech Stack
 * React
