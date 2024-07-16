@@ -1,6 +1,12 @@
 # Plantr
-Project developed at the DEVS Hackathon 2024 (48hr)
-(Team Localhost)
+1st place project developed at the DEVS Hackathon 2024 (48hr)
+Hackathon Theme - Hack for Humanity
+
+**🌿 Plantr - an AI-powered plant matching web application 🌿**
+* ⚡ AI-Powered Matching: Match with plants based on your personal preferences
+* 🤖 AI-Powered Search: Find any plant based on your preferences or special occasions.
+* 📚 PlantDex: Keep track of all your beloved plants.
+* 🛒 Buy, Trade, or Sponsor: Purchase, exchange, or sponsor plants in a sanctuary.
 
 ## Tech Stack
 * React
@@ -11,13 +17,15 @@ Project developed at the DEVS Hackathon 2024 (48hr)
 * OpenAI API
 * Pixabay API
 
-## Developers
+## Developers - Team Localhost
 * John Lin
 * Tony Lim
 * Adam Bodicoat
 * Hayley Smith
 * Owen Li
 * Kevin Cheung
+
+![1](https://github.com/user-attachments/assets/8cba72a7-a899-4554-b256-c9a7e401c3f0)
 
 ## Dev set up information
 
