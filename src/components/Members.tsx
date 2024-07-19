@@ -176,7 +176,7 @@ const MembersPage: React.FC = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => router.push("/add-new-players")}
+          onClick={() => router.push("/new-members")}
         >
           Add New Player
         </Button>

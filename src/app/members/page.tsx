@@ -2,8 +2,8 @@
 
 import MembersPage from "@/components/Members";
 
-const LoginPage = () => {
+const Members = () => {
   return <MembersPage />;
 };
 
-export default LoginPage;
+export default Members;

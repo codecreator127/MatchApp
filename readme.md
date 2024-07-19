@@ -7,8 +7,6 @@
 * TypeScript
 * Firebase
 * TailwindCSS
-* OpenAI API
-* Pixabay API
 
 ## Dev set up information
 

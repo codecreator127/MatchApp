@@ -5,7 +5,7 @@ import { searchImages } from "../app/api/pixabay/route";
 
 import { auth, db } from "../../firebase/firebase";
 import { collection, query, orderBy, getDocs, limit } from "firebase/firestore";
-import Modal from "./MatchPopUp";
+import Modal from "./NewMembers";
 import { useRouter } from "next/navigation";
 
 // Function to fetch the first document in the preferences collection
@@ -365,7 +365,6 @@ const CardContainer = () => {
             )
         )}
       </AnimatePresence>
-      <Modal id="my_modal_7" isOpen={modalOpen} toggleModal={toggleModal} />
     </div>
   );
 };
