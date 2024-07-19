@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, MouseEvent } from "react";
 import { useRouter } from "next/navigation";
 import {
   Menu,
@@ -9,6 +9,20 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
+
+const allMembersList = [
+  { name: "Alice Smith", age: 25, gender: "Female", level: 1 },
+  { name: "Bob Johnson", age: 30, gender: "Male", level: 2 },
+  { name: "Charlie Brown", age: 22, gender: "Male", level: 3 },
+  // Add more members as needed
+];
+
+const allSignedInListDisplay = [
+  { name: "Dave Wilson", age: 27, gender: "Male", level: 2 },
+  { name: "Eve Davis", age: 24, gender: "Female", level: 1 },
+  { name: "Fay Wong", age: 29, gender: "Female", level: 3 },
+  // Add more signed-in members as needed
+];
 
 const MembersPage: React.FC = () => {
   const [tapPosition, setTapPosition] = useState<{ x: number; y: number }>({
@@ -22,32 +36,18 @@ const MembersPage: React.FC = () => {
   const [signedIn, setSignedIn] = useState(false);
   const router = useRouter();
 
-  const allMembersList = [
-    { name: "Alice Smith", age: 25, gender: "Female", level: 1 },
-    { name: "Bob Johnson", age: 30, gender: "Male", level: 2 },
-    { name: "Charlie Brown", age: 22, gender: "Male", level: 3 },
-    // Add more members as needed
-  ];
-
-  const allSignedInListDisplay = [
-    { name: "Dave Wilson", age: 27, gender: "Male", level: 2 },
-    { name: "Eve Davis", age: 24, gender: "Female", level: 1 },
-    { name: "Fay Wong", age: 29, gender: "Female", level: 3 },
-    // Add more signed-in members as needed
-  ];
-
   useEffect(() => {
     // Initialize with all members and signed in players
     setFoundMembers(allMembersList);
     setFoundSignedIn(allSignedInListDisplay);
   }, []);
 
-  const handleTapPosition = (event: React.MouseEvent) => {
+  const handleTapPosition = (event: MouseEvent) => {
     setTapPosition({ x: event.clientX, y: event.clientY });
   };
 
   const handleContextMenu = (
-    event: React.MouseEvent,
+    event: MouseEvent,
     player: any,
     signedIn: boolean
   ) => {
@@ -98,88 +98,81 @@ const MembersPage: React.FC = () => {
     signedIn ? setFoundSignedIn(results) : setFoundMembers(results);
   };
 
-  function signAllOut(): void {
+  function signAllOut() {
     throw new Error("Function not implemented.");
   }
 
   return (
-    <div>
-      <div>
-        <h1>Members Page</h1>
-        <Menu
-          anchorReference="anchorPosition"
-          anchorPosition={{ top: tapPosition.y, left: tapPosition.x }}
-          anchorEl={menuAnchorEl}
-          open={Boolean(menuAnchorEl)}
-          onClose={handleMenuClose}
-        >
-          <MenuItem onClick={() => handleMenuClick("edit")}>
-            Edit Player
-          </MenuItem>
-          <MenuItem
-            onClick={() => handleMenuClick(signedIn ? "sign out" : "sign in")}
-          >
-            {signedIn ? "Sign Out" : "Sign In"}
-          </MenuItem>
-          <MenuItem onClick={() => handleMenuClick("delete")}>
-            Delete Player
-          </MenuItem>
-        </Menu>
-      </div>
-      <div>
-        <TextField
-          onChange={(e) => runFilter(e.target.value, false)}
-          label="Search Members"
-          variant="outlined"
-          style={{ marginRight: "10px" }}
-        />
-        <TextField
-          onChange={(e) => runFilter(e.target.value, true)}
-          label="Search Signed In"
-          variant="outlined"
-        />
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "20px",
-        }}
+    <div className="flex flex-col h-screen p-4">
+      <h1 className="text-2xl font-bold mb-4">Members Page</h1>
+      <Menu
+        anchorReference="anchorPosition"
+        anchorPosition={{ top: tapPosition.y, left: tapPosition.x }}
+        anchorEl={menuAnchorEl}
+        open={Boolean(menuAnchorEl)}
+        onClose={handleMenuClose}
       >
-        <div style={{ flex: 1, marginRight: "10px" }}>
-          {foundMembers.map((member, index) => (
-            <Card
-              key={index}
-              onContextMenu={(e) => handleContextMenu(e, member, false)}
-              style={{ marginBottom: "10px", padding: "10px" }}
-            >
-              <ListItem>
-                <ListItemText
-                  primary={`${member.level} - ${member.name}`}
-                  secondary={`${member.age} years old | ${member.gender}`}
-                />
-              </ListItem>
-            </Card>
-          ))}
+        <MenuItem onClick={() => handleMenuClick("edit")}>Edit Player</MenuItem>
+        <MenuItem
+          onClick={() => handleMenuClick(signedIn ? "sign out" : "sign in")}
+        >
+          {signedIn ? "Sign Out" : "Sign In"}
+        </MenuItem>
+        <MenuItem onClick={() => handleMenuClick("delete")}>
+          Delete Player
+        </MenuItem>
+      </Menu>
+      <div className="flex flex-grow space-x-4">
+        <div className="flex flex-col w-1/2 space-y-4">
+          <TextField
+            onChange={(e) => runFilter(e.target.value, false)}
+            label="Search Members"
+            variant="outlined"
+            className="mb-4"
+          />
+          <div className="flex-grow overflow-auto">
+            {foundMembers.map((member, index) => (
+              <Card
+                key={index}
+                onContextMenu={(e) => handleContextMenu(e, member, false)}
+                className="mb-4 p-4 bg-orange-100"
+              >
+                <ListItem>
+                  <ListItemText
+                    primary={`${member.level} - ${member.name}`}
+                    secondary={`${member.age} years old | ${member.gender}`}
+                  />
+                </ListItem>
+              </Card>
+            ))}
+          </div>
         </div>
-        <div style={{ flex: 1, marginLeft: "10px" }}>
-          {foundSignedIn.map((member, index) => (
-            <Card
-              key={index}
-              onContextMenu={(e) => handleContextMenu(e, member, true)}
-              style={{ marginBottom: "10px", padding: "10px" }}
-            >
-              <ListItem>
-                <ListItemText
-                  primary={`${member.level} - ${member.name}`}
-                  secondary={`${member.age} years old | ${member.gender}`}
-                />
-              </ListItem>
-            </Card>
-          ))}
+        <div className="flex flex-col w-1/2 space-y-4">
+          <TextField
+            onChange={(e) => runFilter(e.target.value, true)}
+            label="Search Signed In"
+            variant="outlined"
+            className="mb-4"
+          />
+          <div className="flex-grow overflow-auto">
+            {foundSignedIn.map((member, index) => (
+              <Card
+                key={index}
+                onContextMenu={(e) => handleContextMenu(e, member, true)}
+                className="mb-4 p-4 bg-green-100"
+              >
+                <ListItem>
+                  <ListItemText
+                    primary={`${member.level} - ${member.name}`}
+                    secondary={`${member.age} years old | ${member.gender}`}
+                  />
+                </ListItem>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
-      <div style={{ marginTop: "20px" }}>
+      <div className="mt-4 flex justify-center space-x-4">
         <Button
           variant="contained"
           color="primary"
@@ -190,16 +183,11 @@ const MembersPage: React.FC = () => {
         <Button
           variant="contained"
           color="secondary"
-          style={{ marginLeft: "10px" }}
           onClick={() => router.push("/courts")}
         >
           Current Matches
         </Button>
-        <Button
-          variant="contained"
-          style={{ marginLeft: "10px" }}
-          onClick={() => signAllOut()}
-        >
+        <Button variant="contained" onClick={() => signAllOut()}>
           Sign All Out
         </Button>
       </div>
