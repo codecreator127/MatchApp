@@ -2,7 +2,8 @@ import Image from "next/image";
 import React, { useState, FormEvent } from "react";
 import { Auth, signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
-import logo from "../../public/logo.png";
+import logo from "../../public/bnh-logo.png";
+import { useRouter } from "next/navigation";
 
 interface LoginProps {
   auth: Auth;
@@ -13,7 +14,7 @@ const Login: React.FC<LoginProps> = ({ auth }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  //   const router = useRouter();
+  const router = useRouter();
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,7 +29,8 @@ const Login: React.FC<LoginProps> = ({ auth }) => {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("User logged in");
       // Additional logic after successful login
-      window.location.href = "/swiper";
+      // window.location.href = "/swiper";
+      router.push("/members");
     } catch (error) {
       setError("Invalid email or password. Please try again.");
       console.log("Login error:", error);
